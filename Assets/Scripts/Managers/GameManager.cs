@@ -23,17 +23,15 @@ public class GameManager : MonoBehaviour
     // 게임 데이터는 LoadData() 함수에서 PlayerPrefs를 이용하여 초기화를 수행한다.
     private uint gold = 0;
     private Text goldText = null;
-
     //private int goldLevel = 0;
     //private string[] goldUnitArr = new string[] { "", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
     private uint dough = 0;
     private Text doughText = null;
-
     private uint doughIncrement = 0;
 
-    private uint lastCombo = 99990;
-    private uint currentCombo = 99990;
+    private uint lastCombo = 0;
+    private uint currentCombo = 0;
     private uint maxCombo = 0;
 
     public RectTransform canvasRectTransform = null;
