@@ -388,6 +388,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        ResetData();
+        //ResetData();
     }
 }
