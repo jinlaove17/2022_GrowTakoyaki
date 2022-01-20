@@ -4008,7 +4008,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4021,8 +4021,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.1
+  far clip plane: 100
   field of view: 60
   orthographic: 1
   orthographic size: 960
@@ -4049,7 +4049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5022,7 +5022,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 715211593}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1335589815}
+        m_TargetAssemblyTypeName: OptionButton, Assembly-CSharp
+        m_MethodName: OnClickResetButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &715211593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6808,7 +6820,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uAC8C\uC784 \uCD08\uAE30\uD654"
+  m_Text: "\uAC8C\uC784 \uCD08\uAE30\uD654\n(\uB514\uBC84\uAE45\uC6A9)"
 --- !u!222 &977187968
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6944,11 +6956,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536241a70739d3e469d9bc3a7a94ac3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 949685654}
+  canvasRectTransform: {fileID: 0}
   starPrefab: {fileID: 6736070141708730268, guid: 7558dbfdb2a331649bde450e83b0905a, type: 3}
   scorePrefab: {fileID: 2789883395690659760, guid: 68d003494a3419c4eac29eb98462a169, type: 3}
   comboPrefab: {fileID: 5089743015445966251, guid: 0b932f71d8aa87846b26a7b961338e08, type: 3}
-  feverPrefab: {fileID: 3317212890042401025, guid: f14cf5b316e01994a9971038a9c3bcac, type: 3}
+  feverPrefab: {fileID: 5554109681346534637, guid: f14cf5b316e01994a9971038a9c3bcac, type: 3}
 --- !u!4 &1009165218
 Transform:
   m_ObjectHideFlags: 0
@@ -12685,7 +12697,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 325, y: 2073308.8}
+  m_AnchoredPosition: {x: 325, y: 2609754.8}
   m_SizeDelta: {x: 650, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1852190288

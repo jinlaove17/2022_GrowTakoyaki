@@ -29,7 +29,7 @@ public class ScrollObject : MonoBehaviour
     private void Start()
     {
         halfWidth = 0.5f * rectTransform.rect.width;
-        canvasHalfWidth = 0.5f * GameManager.instance.canvas.GetComponent<RectTransform>().rect.width;
+        canvasHalfWidth = 0.5f * GameManager.instance.canvasRectTransform.rect.width;
     }
 
     private void Update()

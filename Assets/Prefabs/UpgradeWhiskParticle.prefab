@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3808478184504228033}
   - component: {fileID: 3808478184504228035}
   - component: {fileID: 3808478184504228032}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4571,7 +4571,7 @@ GameObject:
   - component: {fileID: 3808478184908721161}
   - component: {fileID: 3808478184908721206}
   - component: {fileID: 3808478184908721207}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UpgradeWhiskParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9260,7 +9260,7 @@ GameObject:
   - component: {fileID: 3808478184959111099}
   - component: {fileID: 3808478184959111101}
   - component: {fileID: 3808478184959111098}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13855,7 +13855,7 @@ GameObject:
   - component: {fileID: 3808478185591363109}
   - component: {fileID: 3808478185591363111}
   - component: {fileID: 3808478185591363108}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18450,7 +18450,7 @@ GameObject:
   - component: {fileID: 3808478186056050517}
   - component: {fileID: 3808478186056050519}
   - component: {fileID: 3808478186056050516}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Inner Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

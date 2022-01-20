@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
     private uint currentCombo = 0;
     private uint maxCombo = 0;
 
-    public GameObject canvas = null;
+    public RectTransform canvasRectTransform = null;
+
     public GameObject starPrefab = null;
     public GameObject scorePrefab = null;
     public GameObject comboPrefab = null;
@@ -120,12 +121,14 @@ public class GameManager : MonoBehaviour
             Debug.LogError("doughText is null!");
         }
 
-        canvas = GameObject.Find("Canvas");
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
         if (canvas == null)
         {
             Debug.LogError("canvas is null!");
         }
+
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -144,14 +147,14 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+                Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
 
                 if (hit.collider != null)
                 {
                     StartCoroutine(UpdateCombo());
                     StartCoroutine(Count(Goods.DOUGH, dough + doughIncrement, dough));
-                    GenerateEffect(pos);
+                    GenerateEffect(position);
                 }
             }
         }
@@ -160,16 +163,16 @@ public class GameManager : MonoBehaviour
     private void GenerateEffect(Vector3 position)
     {
         // 별 파티클 이펙트
-        position.z = 0.0f;
-        Instantiate(starPrefab, position, Quaternion.identity, canvas.transform);
+        position.z = -50.0f;
+        Instantiate(starPrefab, position, Quaternion.identity, canvasRectTransform);
 
         // 획득 점수 텍스트 이펙트
-        position.y -= 60.0f;
-        GameObject scoreEffect = Instantiate(scorePrefab, position, Quaternion.identity, canvas.transform);
+        position.y -= 65.0f;
+        GameObject scoreEffect = Instantiate(scorePrefab, position, Quaternion.identity, canvasRectTransform);
         scoreEffect.GetComponent<Text>().text = "+" + doughIncrement.ToString() + "L";
 
         // 콤보 텍스트 이펙트
-        GameObject comboEffect = Instantiate(comboPrefab, canvas.transform);
+        GameObject comboEffect = Instantiate(comboPrefab, canvasRectTransform);
         comboEffect.GetComponent<Text>().text = currentCombo.ToString() + comboEffect.GetComponent<Text>().text;
         comboEffect.transform.GetChild(0).GetComponent<Text>().text += maxCombo.ToString();
 
@@ -177,7 +180,7 @@ public class GameManager : MonoBehaviour
         catAnimator.SetTrigger("doTouch");
 
         // 클릭사운드 출력
-        SoundManager.instance.PlaySFX("Click");
+        SoundManager.instance.PlaySFX("Click", 0.5f);
     }
 
     // 참고 : https://unitys.tistory.com/7
@@ -249,7 +252,7 @@ public class GameManager : MonoBehaviour
 
         if (currentCombo > 0 && (currentCombo % 100) == 0)
         {
-            Instantiate(feverPrefab, canvas.transform);
+            Instantiate(feverPrefab, canvasRectTransform);
             StartCoroutine(UpdateFeverMode());
         }
 
@@ -270,15 +273,17 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateFeverMode()
     {
-        Image background = canvas.transform.GetChild(0).gameObject.GetComponent<Image>();
+        Image background = canvasRectTransform.GetChild(0).gameObject.GetComponent<Image>();
 
         doughIncrement *= 2;
+        SellButton.Income *= 2;
         background.color = Color.red;
         SoundManager.instance.PlayBGM("FEVER_TIME");
 
         yield return new WaitForSeconds(8.0f);
 
         doughIncrement /= 2;
+        SellButton.Income /= 2;
         background.color = Color.white;
         SoundManager.instance.PlayBGM("BGM");
     }
@@ -310,7 +315,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Gold = 10000000;
+            Gold = 1000000;
         }
 
         if (PlayerPrefs.HasKey("DOUGH"))
@@ -319,7 +324,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Dough = 10000000;
+            Dough = 1000000;
         }
 
         if (PlayerPrefs.HasKey("DOUGH_INCREMENT"))
@@ -385,6 +390,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        ResetData();
+        //ResetData();
     }
 }

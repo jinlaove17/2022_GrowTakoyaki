@@ -60,11 +60,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(string clipName)
+    public void PlaySFX(string clipName, float volume = 1.0f)
     {
         if (clipName != null && audioClips.ContainsKey(clipName))
         {
-            audioSources[(int)SoundType.SFX].PlayOneShot(audioClips[clipName]);
+            audioSources[(int)SoundType.SFX].PlayOneShot(audioClips[clipName], volume);
         }
     }
 }

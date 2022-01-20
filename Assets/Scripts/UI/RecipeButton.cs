@@ -70,7 +70,7 @@ public class RecipeButton : MonoBehaviour
         }
 
         particlePosition = GetComponent<RectTransform>().position;
-        particlePosition.z = 0.0f;
+        particlePosition.z -= 50.0f;
     }
 
     public void Start()
@@ -111,10 +111,10 @@ public class RecipeButton : MonoBehaviour
     private void GenerateEffect()
     {
         // 파티클 이펙트 출력
-        Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvas.transform);
+        Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
 
         // 텍스트 이펙트 출력
-        GameObject levelUp = Instantiate(levelUpPrefab, transform.position, Quaternion.identity, GameManager.instance.canvas.transform);
+        GameObject levelUp = Instantiate(levelUpPrefab, transform.position, Quaternion.identity, GameManager.instance.canvasRectTransform);
         levelUp.GetComponent<Text>().text += " " + Level.ToString();
 
         // 사운드 출력

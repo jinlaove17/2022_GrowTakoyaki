@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 410314214646525766}
   - component: {fileID: 531628016289327470}
   - component: {fileID: 532587711295708092}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4570,7 +4570,7 @@ GameObject:
   - component: {fileID: 409864315460769008}
   - component: {fileID: 532505758711261222}
   - component: {fileID: 532266990890674622}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Inner Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9237,7 +9237,7 @@ GameObject:
   - component: {fileID: 409521596050491090}
   - component: {fileID: 531750351572313948}
   - component: {fileID: 532219979259550274}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13832,7 +13832,7 @@ GameObject:
   - component: {fileID: 410242973182171144}
   - component: {fileID: 531935858152615640}
   - component: {fileID: 532781135674983104}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18428,7 +18428,7 @@ GameObject:
   - component: {fileID: 532510625580803774}
   - component: {fileID: 532015386803539918}
   - component: {fileID: 7543445509300267053}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GetGoldParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

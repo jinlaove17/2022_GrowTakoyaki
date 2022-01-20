@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6445354310338006353}
   - component: {fileID: 4035274030857077474}
   - component: {fileID: 2800234385440079769}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4570,7 +4570,7 @@ GameObject:
   - component: {fileID: 6529986882023626023}
   - component: {fileID: 6546178638356743035}
   - component: {fileID: 8385149588886251806}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9166,7 +9166,7 @@ GameObject:
   - component: {fileID: 8985854530477488177}
   - component: {fileID: 7847832398241434980}
   - component: {fileID: 5533491101755318542}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UpgradeRecipeParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13855,7 +13855,7 @@ GameObject:
   - component: {fileID: 390787560425782708}
   - component: {fileID: 6967325351350576140}
   - component: {fileID: 9115692337459826651}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Inner Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18522,7 +18522,7 @@ GameObject:
   - component: {fileID: 3287914744468906209}
   - component: {fileID: 2285073477763006043}
   - component: {fileID: 4221616623486324712}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CFX4 Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}

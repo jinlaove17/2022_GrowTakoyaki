@@ -69,10 +69,8 @@ public class SellButton : MonoBehaviour
             Debug.LogError("salesText is null!");
         }
 
-        particlePosition = GetComponent<RectTransform>().position;
-        particlePosition.z = 0.0f;
-
-        goldTextPosition = GetComponent<RectTransform>().transform.position;
+        particlePosition = goldTextPosition = GetComponent<RectTransform>().position;
+        particlePosition.z -= 50.0f;
         goldTextPosition.y += 180.0f;
     }
 
@@ -83,9 +81,9 @@ public class SellButton : MonoBehaviour
             StartCoroutine(GameManager.instance.Count(GameManager.Goods.GOLD, GameManager.instance.Gold + Income, GameManager.instance.Gold));
             StartCoroutine(GameManager.instance.Count(GameManager.Goods.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
 
-            Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvas.transform);
+            Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             
-            GameObject goldText = Instantiate(goldTextPrefab, goldTextPosition, Quaternion.identity, GameManager.instance.canvas.transform);
+            GameObject goldText = Instantiate(goldTextPrefab, goldTextPosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             goldText.GetComponent<Text>().text = "+" + Income.ToString() + "G";
 
             SoundManager.instance.PlaySFX("SELL");

@@ -75,6 +75,15 @@ public class OptionButton : MonoBehaviour
         }
     }
 
+    public void OnClickResetButton()
+    {
+        if (isOpened)
+        {
+            GameManager.instance.ResetData();
+            Application.Quit();
+        }
+    }
+
     public void OnClickExitButton()
     {
         if (isOpened)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6736070141709018040}
   - component: {fileID: 6736070141723174648}
   - component: {fileID: 6736070141723271000}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ShinyStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4849,7 +4849,7 @@ GameObject:
   - component: {fileID: 6736070141709018042}
   - component: {fileID: 6736070141723174650}
   - component: {fileID: 6736070141723271002}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ShinyStars Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9670,7 +9670,7 @@ GameObject:
   - component: {fileID: 6736070141723174652}
   - component: {fileID: 6736070141723271004}
   - component: {fileID: 6736070141697952380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StarParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14529,7 +14529,7 @@ GameObject:
   - component: {fileID: 6736070141709018046}
   - component: {fileID: 6736070141723174654}
   - component: {fileID: 6736070141723271006}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Outlines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
