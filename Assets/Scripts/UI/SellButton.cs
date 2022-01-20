@@ -69,8 +69,17 @@ public class SellButton : MonoBehaviour
             Debug.LogError("salesText is null!");
         }
 
-        particlePosition = goldTextPosition = GetComponent<RectTransform>().position;
-        particlePosition.z -= 50.0f;
+        RectTransform rectTransform = GetComponent<RectTransform>();
+
+        if (rectTransform == null)
+        {
+            Debug.LogError("rectTransform is null!");
+        }
+
+        float halfWidth = 0.5f * rectTransform.rect.width;
+        float halfHeight = 0.5f * rectTransform.rect.height;
+
+        particlePosition = goldTextPosition = new Vector3(rectTransform.position.x + halfWidth, rectTransform.position.y + halfHeight, -50.0f);
         goldTextPosition.y += 180.0f;
     }
 

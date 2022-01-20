@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
 
     private uint doughIncrement = 0;
 
-    private uint lastCombo = 0;
-    private uint currentCombo = 0;
+    private uint lastCombo = 99990;
+    private uint currentCombo = 99990;
     private uint maxCombo = 0;
 
     public RectTransform canvasRectTransform = null;
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(UpdateFeverMode());
         }
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.65f);
 
         ++lastCombo;
 
@@ -315,7 +315,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Gold = 1000000;
+            Gold = 10000000;
         }
 
         if (PlayerPrefs.HasKey("DOUGH"))
@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Dough = 1000000;
+            Dough = 10000000;
         }
 
         if (PlayerPrefs.HasKey("DOUGH_INCREMENT"))
@@ -390,6 +390,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        //ResetData();
+        ResetData();
     }
 }
