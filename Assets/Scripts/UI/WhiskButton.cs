@@ -110,7 +110,7 @@ public class WhiskButton : MonoBehaviour
 
     private void UpgradeWhisk()
     {
-        StartCoroutine(GameManager.instance.Count(GameManager.Goods.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
+        StartCoroutine(GameManager.instance.Count(Goods.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
 
         GameManager.instance.DoughIncrement = (uint)(1.5f * GameManager.instance.DoughIncrement);
 

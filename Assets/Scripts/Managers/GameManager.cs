@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 재화의 종류
+public enum Goods
+{
+    GOLD,
+    DOUGH
+};
+
 public class GameManager : MonoBehaviour
 {
-    // 재화의 종류
-    public enum Goods
-    {
-        GOLD,
-        DOUGH
-    };
-
     // 싱글톤 패턴
     public static GameManager instance = null;
 
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private uint maxCombo = 0;
 
     public RectTransform canvasRectTransform = null;
+    Image backgroundImage = null;
 
     public GameObject starPrefab = null;
     public GameObject scorePrefab = null;
@@ -127,6 +128,18 @@ public class GameManager : MonoBehaviour
         }
 
         canvasRectTransform = canvas.GetComponent<RectTransform>();
+
+        if (canvasRectTransform == null)
+        {
+            Debug.LogError("canvasRectTransform is null!");
+        }
+
+        backgroundImage = canvasRectTransform.GetChild(0).gameObject.GetComponent<Image>();
+
+        if (backgroundImage == null)
+        {
+            Debug.LogError("backgroundImage is null!");
+        }
     }
 
     private void Start()
@@ -171,8 +184,10 @@ public class GameManager : MonoBehaviour
 
         // 콤보 텍스트 이펙트
         GameObject comboEffect = Instantiate(comboPrefab, canvasRectTransform);
-        comboEffect.GetComponent<Text>().text = currentCombo.ToString() + comboEffect.GetComponent<Text>().text;
-        comboEffect.transform.GetChild(0).GetComponent<Text>().text += maxCombo.ToString();
+        Text comboText = comboEffect.GetComponent<Text>();
+        Text maxComboText = comboEffect.transform.GetChild(0).GetComponent<Text>();
+        comboText.text = currentCombo.ToString() + " COMBO!";
+        maxComboText.text = "MAX " + maxCombo.ToString();
 
         // 고양이의 애니메이션 트리거 발생
         catAnimator.SetTrigger("doTouch");
@@ -248,16 +263,19 @@ public class GameManager : MonoBehaviour
     {
         ++currentCombo;
 
+        // 100 콤보 단위로 피버모드 진입
         if (currentCombo > 0 && (currentCombo % 100) == 0)
         {
             Instantiate(feverPrefab, canvasRectTransform);
             StartCoroutine(UpdateFeverMode());
         }
 
+        // 콤보는 마지막 클릭이후 0.65초동안 유지
         yield return new WaitForSeconds(0.65f);
 
         ++lastCombo;
 
+        // 0.65초 이후에 이전과 콤보수가 같다면 최대 콤보를 갱신할지 검사한 후 콤보카운트를 0으로 설정
         if (currentCombo == lastCombo)
         {
             if (currentCombo > maxCombo)
@@ -271,18 +289,26 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateFeverMode()
     {
-        Image background = canvasRectTransform.GetChild(0).gameObject.GetComponent<Image>();
-
+        // 피버모드에 진입시, 8초동안 획득 반죽량과 획득 골드량 2배 증가
         doughIncrement *= 2;
         SellButton.Income *= 2;
-        background.color = Color.red;
+
+        // 뒷 배경색을 붉은색으로 설정
+        backgroundImage.color = Color.red;
+
+        // 피버모드 진입 BGM 사운드 출력
         SoundManager.instance.PlayBGM("FEVER_TIME");
 
         yield return new WaitForSeconds(8.0f);
 
+        // 8초 이후에는 다시 획득 반죽량과 획득 골드량을 원래대로 변경
         doughIncrement /= 2;
         SellButton.Income /= 2;
-        background.color = Color.white;
+
+        // 뒷 배경색을 푸른색으로 설정
+        backgroundImage.color = Color.white;
+
+        // 기존 BGM 사운드 출력
         SoundManager.instance.PlayBGM("BGM");
     }
 

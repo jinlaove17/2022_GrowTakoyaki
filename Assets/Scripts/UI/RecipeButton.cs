@@ -101,7 +101,7 @@ public class RecipeButton : MonoBehaviour
 
     private void UpgradeRecipe()
     {
-        StartCoroutine(GameManager.instance.Count(GameManager.Goods.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
+        StartCoroutine(GameManager.instance.Count(Goods.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
 
         SellButton.Income = (uint)(1.75f * SellButton.Income);
         SellButton.Sales = (uint)(2.0f * SellButton.Sales);

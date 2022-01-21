@@ -31,7 +31,6 @@ public class SoundManager : MonoBehaviour
 
         RegisterAudioclip("BGM", canvasAudioSources[0].clip);
         RegisterAudioclip("FEVER_TIME", canvasAudioSources[1].clip);
-
         PlayBGM("BGM");
     }
 

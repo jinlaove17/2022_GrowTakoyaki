@@ -87,8 +87,8 @@ public class SellButton : MonoBehaviour
     {
         if (GameManager.instance.Dough >= Sales)
         {
-            StartCoroutine(GameManager.instance.Count(GameManager.Goods.GOLD, GameManager.instance.Gold + Income, GameManager.instance.Gold));
-            StartCoroutine(GameManager.instance.Count(GameManager.Goods.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
+            StartCoroutine(GameManager.instance.Count(Goods.GOLD, GameManager.instance.Gold + Income, GameManager.instance.Gold));
+            StartCoroutine(GameManager.instance.Count(Goods.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
 
             Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             

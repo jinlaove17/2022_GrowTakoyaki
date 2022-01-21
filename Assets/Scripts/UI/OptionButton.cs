@@ -49,12 +49,20 @@ public class OptionButton : MonoBehaviour
         {
             Debug.LogError("sfxSlider is null!");
         }
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+
+        SoundManager.instance.RegisterAudioclip("PAUSE_IN", audioSources[0].clip);
+        SoundManager.instance.RegisterAudioclip("PAUSE_OUT", audioSources[1].clip);
     }
 
     private void Update()
     {
-        SoundManager.instance.audioSources[(int)SoundType.BGM].volume = bgmSlider.value;
-        SoundManager.instance.audioSources[(int)SoundType.SFX].volume = sfxSlider.value; 
+        if (isOpened)
+        {
+            SoundManager.instance.audioSources[(int)SoundType.BGM].volume = bgmSlider.value;
+            SoundManager.instance.audioSources[(int)SoundType.SFX].volume = sfxSlider.value;
+        }
     }
 
     public void OnClickOptionButton()
@@ -63,6 +71,8 @@ public class OptionButton : MonoBehaviour
         {
             isOpened = true;
             option.SetActive(true);
+
+            SoundManager.instance.PlaySFX("PAUSE_IN", 0.8f);
         }
     }
 
@@ -72,6 +82,8 @@ public class OptionButton : MonoBehaviour
         {
             isOpened = false;
             option.SetActive(false);
+
+            SoundManager.instance.PlaySFX("PAUSE_OUT", 1.0f);
         }
     }
 

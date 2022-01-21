@@ -10,8 +10,8 @@ public class DictButton : MonoBehaviour
     private GameObject whiskDict = null;
     private GameObject recipeDict = null;
 
-    private Button whiskDictButton = null;
-    private Button recipeDictButton = null;
+    private Image whiskDictButtonImage = null;
+    private Image recipeDictButtonImage = null;
 
     private Animator dictAnimator = null;
 
@@ -49,16 +49,16 @@ public class DictButton : MonoBehaviour
             Debug.LogError("recipeDict is null!");
         }
 
-        whiskDictButton = dict.transform.GetChild(2).gameObject.GetComponent<Button>();
+        whiskDictButtonImage = dict.transform.GetChild(2).gameObject.GetComponent<Image>();
 
-        if (whiskDictButton == null)
+        if (whiskDictButtonImage == null)
         {
-            Debug.LogError("whiskDictButton is null!");
+            Debug.LogError("whiskDictButtonImage is null!");
         }
 
-        recipeDictButton = dict.transform.GetChild(3).gameObject.GetComponent<Button>();
+        recipeDictButtonImage = dict.transform.GetChild(3).gameObject.GetComponent<Image>();
 
-        if (recipeDictButton == null)
+        if (recipeDictButtonImage == null)
         {
             Debug.LogError("recipeDictButton is null!");
         }
@@ -113,10 +113,9 @@ public class DictButton : MonoBehaviour
     {
         if (recipeDict.activeSelf)
         {
-            whiskDictButton.GetComponent<Image>().color = activeColor;
+            whiskDictButtonImage.color = activeColor;
             whiskDict.SetActive(true);
-
-            recipeDictButton.GetComponent<Image>().color = inactiveColor;
+            recipeDictButtonImage.color = inactiveColor;
             recipeDict.SetActive(false);
 
             SoundManager.instance.PlaySFX("BookFlip");
@@ -127,10 +126,9 @@ public class DictButton : MonoBehaviour
     {
         if (whiskDict.activeSelf)
         {
-            whiskDictButton.GetComponent<Image>().color = inactiveColor;
+            whiskDictButtonImage.color = inactiveColor;
             whiskDict.SetActive(false);
-
-            recipeDictButton.GetComponent<Image>().color = activeColor;
+            recipeDictButtonImage.color = activeColor;
             recipeDict.SetActive(true);
 
             SoundManager.instance.PlaySFX("BookFlip");
