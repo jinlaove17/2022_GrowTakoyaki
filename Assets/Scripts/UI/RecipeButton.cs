@@ -123,7 +123,7 @@ public class RecipeButton : MonoBehaviour
         Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
 
         // 텍스트 이펙트 출력
-        GameObject levelUp = Instantiate(levelUpPrefab, transform.position, Quaternion.identity, GameManager.instance.canvasRectTransform);
+        GameObject levelUp = Instantiate(levelUpPrefab, GameManager.instance.canvasRectTransform);
         levelUp.GetComponent<Text>().text += " " + Level.ToString();
 
         // 사운드 출력

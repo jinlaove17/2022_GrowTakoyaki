@@ -12,7 +12,7 @@ public class SellButton : MonoBehaviour
     private Button sellButton = null;
 
     private Vector3 particlePosition = Vector3.zero;
-    private Vector3 goldTextPosition = Vector3.zero;
+    private Vector3 incomeTextPosition = Vector3.zero;
 
     public GameObject particlePrefab = null;
     public GameObject goldTextPrefab = null;
@@ -79,8 +79,8 @@ public class SellButton : MonoBehaviour
         float halfWidth = 0.5f * rectTransform.rect.width;
         float halfHeight = 0.5f * rectTransform.rect.height;
 
-        particlePosition = goldTextPosition = new Vector3(rectTransform.position.x + halfWidth, rectTransform.position.y + halfHeight, -50.0f);
-        goldTextPosition.y += 180.0f;
+        particlePosition = incomeTextPosition = new Vector3(rectTransform.position.x + halfWidth, rectTransform.position.y + halfHeight, -50.0f);
+        incomeTextPosition.y += 180.0f;
     }
 
     public void OnClickSellButton()
@@ -92,7 +92,7 @@ public class SellButton : MonoBehaviour
 
             Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             
-            GameObject goldText = Instantiate(goldTextPrefab, goldTextPosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
+            GameObject goldText = Instantiate(goldTextPrefab, incomeTextPosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             goldText.GetComponent<Text>().text = "+" + Income.ToString() + "G";
 
             SoundManager.instance.PlaySFX("SELL");
