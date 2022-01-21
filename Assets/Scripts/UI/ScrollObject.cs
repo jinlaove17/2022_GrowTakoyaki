@@ -36,10 +36,9 @@ public class ScrollObject : MonoBehaviour
     {
         rectTransform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
 
-        // 현재 객체의 무한 스크롤링(이동시, y좌표 값을 임의의 값으로 설정)
         if (rectTransform.position.x + halfWidth <= -canvasHalfWidth)
         {
-            rectTransform.position = new Vector3(canvasHalfWidth + halfWidth, Random.Range(515.0f, 650.0f));
+            rectTransform.position = new Vector3(canvasHalfWidth + halfWidth, rectTransform.position.y);
         }
     }
 }

@@ -21,6 +21,9 @@ public class WhiskButton : MonoBehaviour
 
     private Vector3 particlePosition = Vector3.zero;
 
+    private Color activeTextColor = new Color(0.0f, 1.0f, 220.0f / 255.0f);
+    private Color activeSubTextColor = Color.yellow;
+
     public GameObject particlePrefab = null;
     public GameObject levelUpPrefab = null;
 
@@ -143,8 +146,13 @@ public class WhiskButton : MonoBehaviour
         if (lv > 1 && lv <= maxLevel)
         {
             whiskDictInfo[lv - 1].transform.GetChild(0).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f);
-            whiskDictInfo[lv - 1].transform.GetChild(1).GetComponent<Text>().text = whiskName[lv - 1];
-            whiskDictInfo[lv - 1].transform.GetChild(2).GetComponent<Text>().text = "Å¬¸¯½Ã È¹µæ ¹ÝÁ×·® " + (1.5f * (lv - 1)).ToString() + "¹è Áõ°¡";
+
+            Text[] infoText = whiskDictInfo[lv - 1].transform.GetComponentsInChildren<Text>();
+
+            infoText[0].text = whiskName[lv - 1];
+            infoText[0].color = activeTextColor;
+            infoText[1].text = "Å¬¸¯½Ã È¹µæ ¹ÝÁ×·® " + (1.5f * (lv - 1)).ToString() + "¹è Áõ°¡";
+            infoText[1].color = activeSubTextColor;
         }
     }
 }

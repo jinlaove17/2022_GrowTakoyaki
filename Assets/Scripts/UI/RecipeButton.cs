@@ -21,6 +21,9 @@ public class RecipeButton : MonoBehaviour
 
     private Vector3 particlePosition = Vector3.zero;
 
+    private Color activeTextColor = new Color(0.0f, 1.0f, 220.0f / 255.0f);
+    private Color activeSubTextColor = Color.yellow;
+
     public GameObject particlePrefab = null;
     public GameObject levelUpPrefab = null;
 
@@ -135,8 +138,13 @@ public class RecipeButton : MonoBehaviour
         if (lv > 1 && lv <= maxLevel)
         {
             recipeDictInfo[lv - 1].transform.GetChild(0).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f);
-            recipeDictInfo[lv - 1].transform.GetChild(1).GetComponent<Text>().text = recipeName[lv - 1];
-            recipeDictInfo[lv - 1].transform.GetChild(2).GetComponent<Text>().text = "¼Ò¿ä ¹ÝÁ×·® : " + SellButton.Sales + "L\nÈ¹µæ °ñµå·® : " + SellButton.Income + "G";
+
+            Text[] infoText = recipeDictInfo[lv - 1].transform.GetComponentsInChildren<Text>();
+
+            infoText[0].text = recipeName[lv - 1];
+            infoText[0].color = activeTextColor;
+            infoText[1].text = "¼Ò¿ä ¹ÝÁ×·® : " + SellButton.Sales.ToString() + "L\n È¹µæ °ñµå·® : " + SellButton.Income.ToString() + "G";
+            infoText[1].color = activeSubTextColor;
         }
     }
 }

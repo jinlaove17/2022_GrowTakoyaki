@@ -36,14 +36,14 @@ public class OptionButton : MonoBehaviour
             Debug.LogError("option is null!");
         }
 
-        bgmSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<Slider>();
+        bgmSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).gameObject.GetComponent<Slider>();
        
         if (bgmSlider == null)
         {
             Debug.LogError("bgmSlider is null!");
         }
 
-        sfxSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(3).gameObject.GetComponent<Slider>();
+        sfxSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(4).gameObject.GetComponent<Slider>();
         
         if (sfxSlider == null)
         {
@@ -84,15 +84,6 @@ public class OptionButton : MonoBehaviour
             option.SetActive(false);
 
             SoundManager.instance.PlaySFX("PAUSE_OUT", 1.0f);
-        }
-    }
-
-    public void OnClickResetButton()
-    {
-        if (isOpened)
-        {
-            GameManager.instance.ResetData();
-            Application.Quit();
         }
     }
 
