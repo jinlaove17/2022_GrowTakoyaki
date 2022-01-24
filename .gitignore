@@ -453,9 +453,6 @@ sysinfo.txt
 *.unitypackage
 *.app
 
-# 기타 스토어 에셋 폴더
-JMO Assets/
-
 # Crashlytics generated file
 crashlytics-build.properties
 
