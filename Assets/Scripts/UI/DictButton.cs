@@ -7,11 +7,9 @@ public class DictButton : MonoBehaviour
 {
     private static bool isOpened = false;
 
-    private GameObject whiskDict = null;
-    private GameObject recipeDict = null;
-
-    private Image whiskDictButtonImage = null;
-    private Image recipeDictButtonImage = null;
+    // 0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet
+    private Image[] categoryButtonImages = null;
+    private GameObject[] dictContents = null;
 
     private Animator dictAnimator = null;
 
@@ -33,69 +31,46 @@ public class DictButton : MonoBehaviour
 
     private void Awake()
     {
-        GameObject dict = GameObject.Find("Dictionary");
+        GameObject dictionary = GameObject.Find("Dictionary");
+        GameManager.CheckNull(dictionary);
 
-        whiskDict = dict.transform.GetChild(0).gameObject;
+        GameObject category = dictionary.transform.GetChild(1).gameObject;
+        GameManager.CheckNull(category);
 
-        if (whiskDict == null)
+        Debug.Log(category.transform.childCount);
+
+        categoryButtonImages = new Image[category.transform.childCount];
+
+        for (int i = 0; i < category.transform.childCount; ++i)
         {
-            Debug.LogError("whiskDict is null!");
+            categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
         }
 
-        recipeDict = dict.transform.GetChild(1).gameObject;
+        GameObject contents = dictionary.transform.GetChild(2).gameObject;
+        GameManager.CheckNull(contents);
 
-        if (recipeDict == null)
+        dictContents = new GameObject[categoryButtonImages.Length];
+
+        for (int i = 0; i < categoryButtonImages.Length; ++i)
         {
-            Debug.LogError("recipeDict is null!");
+            dictContents[i] = contents.transform.GetChild(i).gameObject;
         }
 
-        whiskDictButtonImage = dict.transform.GetChild(2).gameObject.GetComponent<Image>();
+        dictAnimator = dictionary.GetComponent<Animator>();
+        GameManager.CheckNull(dictAnimator);
 
-        if (whiskDictButtonImage == null)
-        {
-            Debug.LogError("whiskDictButtonImage is null!");
-        }
-
-        recipeDictButtonImage = dict.transform.GetChild(3).gameObject.GetComponent<Image>();
-
-        if (recipeDictButtonImage == null)
-        {
-            Debug.LogError("recipeDictButton is null!");
-        }
-
-        dictAnimator = dict.GetComponent<Animator>();
-
-        if (dictAnimator == null)
-        {
-            Debug.LogError("dictAnimator is null!");
-        }
-
-        AudioSource audioSource = GetComponent<AudioSource>();
-
-        if (audioSource == null)
-        {
-            Debug.LogError("audioSource is null!");
-        }
-
-        SoundManager.instance.RegisterAudioclip("BookSlap", audioSource.clip);
-
-        audioSource = dict.GetComponent<AudioSource>();
-
-        if (audioSource == null)
-        {
-            Debug.LogError("audioSource is null!");
-        }
-
-        SoundManager.instance.RegisterAudioclip("BookFlip", audioSource.clip);
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        GameManager.CheckNull(audioSources);
+        SoundManager.instance.RegisterAudioclip("BookSlap", audioSources[0].clip);
+        SoundManager.instance.RegisterAudioclip("BookFlip", audioSources[1].clip);
     }
 
     public void OnClickDictButton()
     {
-        if (!isOpened)
+        if (GameManager.instance.IsClosed())
         {
             isOpened = true;
             dictAnimator.SetTrigger("doShow");
-
             SoundManager.instance.PlaySFX("BookSlap");
         }
     }
@@ -109,27 +84,28 @@ public class DictButton : MonoBehaviour
         }
     }
 
-    public void OnClickWhiskDictButton()
+    public void OnClickCategoryButton(int index)
     {
-        if (recipeDict.activeSelf)
+        if (index < 0 || index > categoryButtonImages.Length)
         {
-            whiskDictButtonImage.color = activeColor;
-            whiskDict.SetActive(true);
-            recipeDictButtonImage.color = inactiveColor;
-            recipeDict.SetActive(false);
-
-            SoundManager.instance.PlaySFX("BookFlip");
+            return;
         }
-    }
 
-    public void OnClickRecipeDictButton()
-    {
-        if (whiskDict.activeSelf)
+        if (!dictContents[index].activeSelf)
         {
-            whiskDictButtonImage.color = inactiveColor;
-            whiskDict.SetActive(false);
-            recipeDictButtonImage.color = activeColor;
-            recipeDict.SetActive(true);
+            for (int i = 0; i < categoryButtonImages.Length; ++i)
+            {
+                if (i == index)
+                {
+                    categoryButtonImages[i].color = activeColor;
+                    dictContents[i].SetActive(true);
+                }
+                else
+                {
+                    categoryButtonImages[i].color = inactiveColor;
+                    dictContents[i].SetActive(false);
+                }
+            }
 
             SoundManager.instance.PlaySFX("BookFlip");
         }

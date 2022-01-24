@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class OptionButton : MonoBehaviour
 {
-    private GameObject option = null;
-
     private static bool isOpened = false;
+
+    private GameObject option = null;
 
     private Slider bgmSlider = null;
     private Slider sfxSlider = null;

@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,6 +82,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static void CheckNull(Object obj)
+    {
+        if (!obj)
+        {
+            Debug.LogError(obj.name + "is null!");
+        }
+    }
+
+    public static void CheckNull(Object[] objs)
+    {
+        foreach (Object obj in objs)
+        { 
+            if (!obj)
+            {
+                Debug.LogError(obj.name + "is null!");
+                return;
+            }
+        }
+    }
+
     private void Awake()
     {
         // Fix 60FPS
@@ -154,7 +173,7 @@ public class GameManager : MonoBehaviour
     {
         Dough += 1;
 
-        if (!DictButton.IsOpened && !OptionButton.IsOpened)
+        if (IsClosed())
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -169,6 +188,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool IsClosed()
+    {
+        return (!OptionButton.IsOpened) && (!AchievementButton.IsOpened) && (!DictButton.IsOpened);
     }
 
     private void GenerateEffect(Vector3 position)
@@ -325,7 +349,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("SALES", (int)SellButton.Sales);
 
         // Whisk Button Data
-        PlayerPrefs.SetInt("WHISK_LEVEL", (int)WhiskButton.Level);
+        //PlayerPrefs.SetInt("WHISK_LEVEL", (int)WhiskButton.Level);
 
         // Recipe Button Data
         PlayerPrefs.SetInt("RECIPE_LEVEL", (int)RecipeButton.Level);
@@ -389,11 +413,11 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("WHISK_LEVEL"))
         {
-            WhiskButton.Level = (uint)PlayerPrefs.GetInt("WHISK_LEVEL");
+            //WhiskButton.Level = (uint)PlayerPrefs.GetInt("WHISK_LEVEL");
         }
         else
         {
-            WhiskButton.Level = 1;
+            //WhiskButton.Level = 1;
         }
 
         if (PlayerPrefs.HasKey("RECIPE_LEVEL"))
