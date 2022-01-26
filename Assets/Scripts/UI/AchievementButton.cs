@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AchievementButton : MonoBehaviour
 {
+    // 업적창이 열렸는지에 대한 여부
     private static bool isOpened = false;
 
-    private GameObject achievement = null;
+    // 업적창의 애니메이션 출력을 위한 애니메이터
     private Animator achievementAnimator = null;
 
     private void Awake()
     {
-        achievement = GameObject.Find("Achievement");
+        GameObject achievement = GameObject.Find("Achievement");
         GameManager.CheckNull(achievement);
 
         achievementAnimator = achievement.GetComponent<Animator>();

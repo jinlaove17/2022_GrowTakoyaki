@@ -13,17 +13,8 @@ public class ScrollObject : MonoBehaviour
 
     private void Awake()
     {
-        if (movableObject == null)
-        {
-            Debug.LogError("movableObject is null!");
-        }
-
         rectTransform = movableObject.GetComponent<RectTransform>();
-
-        if (rectTransform == null)
-        {
-            Debug.LogError("rectTransform is null!");
-        }
+        GameManager.CheckNull(rectTransform);
     }
 
     private void Start()

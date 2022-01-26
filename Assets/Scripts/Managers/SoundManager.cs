@@ -12,25 +12,27 @@ public enum SoundType
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    
-    public List<AudioSource> audioSources = new List<AudioSource>();
+
+    // 오디오 클립 모음
     private Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
+
+    // 오디오 플레이어(0: 배경음(BGM), 1: 효과음(SFX))
+    public List<AudioSource> audioSources = new List<AudioSource>();
+
+    // 배경음 클립 모음
+    public AudioClip[] bgmClips = null;
 
     private void Awake()
     {
         instance = this;
+
+        GetComponents<AudioSource>(audioSources);
     }
 
     private void Start()
     {
-        GetComponents<AudioSource>(audioSources);
-
-        audioSources[(int)SoundType.BGM].loop = true;
-
-        AudioSource[] canvasAudioSources = GameObject.Find("Canvas").GetComponents<AudioSource>();
-
-        RegisterAudioclip("BGM", canvasAudioSources[0].clip);
-        RegisterAudioclip("FEVER_TIME", canvasAudioSources[1].clip);
+        RegisterAudioclip("BGM", bgmClips[0]);
+        RegisterAudioclip("FEVER_TIME", bgmClips[1]);
         PlayBGM("BGM");
     }
 

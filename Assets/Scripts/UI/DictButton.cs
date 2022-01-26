@@ -5,16 +5,22 @@ using UnityEngine.UI;
 
 public class DictButton : MonoBehaviour
 {
+    // 도감창이 열려있는지에 대한 여부
     private static bool isOpened = false;
 
     // 0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet
     private Image[] categoryButtonImages = null;
     private GameObject[] dictContents = null;
 
+    // 도감의 애니메이션 출력을 위한 애니메이터
     private Animator dictAnimator = null;
 
+    // 카테고리 버튼의 활성/비활성 색상
     private Color activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
     private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
+
+    // 효과 사운드
+    public AudioClip[] audioClips = null;
 
     public static bool IsOpened
     {
@@ -37,13 +43,12 @@ public class DictButton : MonoBehaviour
         GameObject category = dictionary.transform.GetChild(1).gameObject;
         GameManager.CheckNull(category);
 
-        Debug.Log(category.transform.childCount);
-
         categoryButtonImages = new Image[category.transform.childCount];
 
         for (int i = 0; i < category.transform.childCount; ++i)
         {
             categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
+            GameManager.CheckNull(categoryButtonImages[i]);
         }
 
         GameObject contents = dictionary.transform.GetChild(2).gameObject;
@@ -54,15 +59,53 @@ public class DictButton : MonoBehaviour
         for (int i = 0; i < categoryButtonImages.Length; ++i)
         {
             dictContents[i] = contents.transform.GetChild(i).gameObject;
+            GameManager.CheckNull(dictContents[i]);
         }
 
         dictAnimator = dictionary.GetComponent<Animator>();
         GameManager.CheckNull(dictAnimator);
 
-        AudioSource[] audioSources = GetComponents<AudioSource>();
-        GameManager.CheckNull(audioSources);
-        SoundManager.instance.RegisterAudioclip("BookSlap", audioSources[0].clip);
-        SoundManager.instance.RegisterAudioclip("BookFlip", audioSources[1].clip);
+        GameManager.CheckNull(audioClips);
+        SoundManager.instance.RegisterAudioclip("BookSlap", audioClips[0]);
+        SoundManager.instance.RegisterAudioclip("BookFlip", audioClips[1]);
+    }
+
+    public void UnlockWhiskDict(uint level, Text[] infoTexts)
+    {
+        // dictContents[0]: WhiskDict
+        // dictContents[0].transform.GetChild(0): Contents;
+        GameObject target = dictContents[0].transform.GetChild(0).transform.GetChild((int)level).gameObject;
+
+        // 이미지 색 활성화
+        target.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+
+        // 텍스트 활성화
+        Text[] newTexts = target.GetComponentsInChildren<Text>();
+
+        for (int i = 0; i < newTexts.Length; ++i)
+        {
+            newTexts[i].text = infoTexts[i].text;
+            newTexts[i].color = infoTexts[i].color;
+        }
+    }
+
+    public void UnlockRecipeDict(uint level, Text[] infoTexts)
+    {
+        // dictContents[1]: RecipeDict
+        // dictContents[1].transform.GetChild(0): Contents;
+        GameObject target = dictContents[1].transform.GetChild(0).transform.GetChild((int)level).gameObject;
+
+        // 이미지 색 활성화
+        target.transform.GetChild(0).GetComponent<Image>().color = Color.white;
+
+        // 텍스트 활성화
+        Text[] newTexts = target.GetComponentsInChildren<Text>();
+
+        for (int i = 0; i < newTexts.Length; ++i)
+        {
+            newTexts[i].text = infoTexts[i].text;
+            newTexts[i].color = infoTexts[i].color;
+        }
     }
 
     public void OnClickDictButton()
