@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,15 +38,19 @@ public class GameManager : MonoBehaviour
 
     // 게임 데이터는 LoadData() 함수에서 PlayerPrefs를 이용하여 초기화를 수행한다.
     private uint gold = 0;
+    private uint totalGold = 0;
     private Text goldText = null;
 
     private uint dough = 0;
+    private uint totalDough = 0;
     private Text doughText = null;
     private uint doughIncrement = 0;
 
     private uint currentCombo = 0;
+    private uint totalCombo = 0;
     private uint lastCombo = 0;
     private uint maxCombo = 0;
+    private uint totalMaxCombo = 0;
 
     // 피버모드 관련 데이터
     private bool isFeverMode = false;
@@ -83,6 +88,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public uint TotalGold
+    {
+        set
+        {
+            totalGold = value;
+        }
+
+        get
+        {
+            return totalGold;
+        }
+    }
+
     public uint Dough
     {
         set
@@ -94,6 +112,19 @@ public class GameManager : MonoBehaviour
         get
         {
             return dough;
+        }
+    }
+
+    public uint TotalDough
+    {
+        set
+        {
+            totalDough = value;
+        }
+
+        get
+        {
+            return totalDough;
         }
     }
 
@@ -110,6 +141,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public uint Combo
+    {
+        set
+        {
+            currentCombo = value;
+        }
+
+        get
+        {
+            return currentCombo;
+        }
+    }
+
+    public uint TotalCombo
+    {
+        set
+        {
+            totalCombo = value;
+        }
+
+        get
+        {
+            return totalCombo;
+        }
+    }
+
     public uint MaxCombo
     {
         set
@@ -120,6 +177,19 @@ public class GameManager : MonoBehaviour
         get
         {
             return maxCombo;
+        }
+    }
+
+    public uint TotalMaxCombo
+    {
+        set
+        {
+            totalMaxCombo = value;
+        }
+
+        get
+        {
+            return totalMaxCombo;
         }
     }
 
@@ -175,16 +245,17 @@ public class GameManager : MonoBehaviour
     {
         LoadData();
 
-        // 1회 안내 메세지를 출력해준다.
-        PrintMessage("화면을 마구마구 터치해서 반죽을 모아보세요!");
-
-        // Auto Save
-        //InvokeRepeating("SaveData", 0.0f, 3.0f);
+        // 3초마다 자동으로 저장한다.
+        StartCoroutine(AutoSave(3.0f));
+        
+        // 1초 후 안내 메세지를 출력해준다.
+        StartCoroutine(WaitAndCall<string>(PrintMessage, "화면을 마구마구 터치해서 반죽을 모아보세요!", 1.0f));
     }
 
     private void Update()
     {
         Dough += 1;
+        totalDough += 1;
 
         if (IsClosed())
         {
@@ -198,12 +269,14 @@ public class GameManager : MonoBehaviour
                     StartCoroutine(UpdateCombo());
                     StartCoroutine(Count(GoodsType.DOUGH, dough + doughIncrement, dough));
                     GenerateEffect(position);
+
+                    totalCombo += 1;
                 }
             }
         }
     }
 
-    public static void CheckNull(Object obj)
+    public static void CheckNull(UnityEngine.Object obj)
     {
         if (!obj)
         {
@@ -211,9 +284,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void CheckNull(Object[] objs)
+    public static void CheckNull(UnityEngine.Object[] objs)
     {
-        foreach (Object obj in objs)
+        foreach (UnityEngine.Object obj in objs)
         {
             if (!obj)
             {
@@ -324,16 +397,25 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.PlaySFX("Click", 0.5f);
     }
 
+    public IEnumerator WaitAndCall<T>(Action<T> func, T param, float seconds)
+    {
+        // seconds초동안 기다린 후,
+        yield return new WaitForSeconds(seconds);
+
+        // 매개변수로 넘어온 함수를 호출한다.
+        func(param);
+    }
+
     // 참고 : https://unitys.tistory.com/7
     public IEnumerator Count(GoodsType goods, float target, float current)
     {
-        float duration = 0.08f;
+        float duration = 0.15f;
         float offset;
 
         switch (goods)
         {
             case GoodsType.DOUGH:
-                offset = (target - dough) / duration;
+                offset = (target - current) / duration;
 
                 if (offset >= 0.0f)
                 {
@@ -344,6 +426,8 @@ public class GameManager : MonoBehaviour
 
                         yield return null;
                     }
+
+                    totalDough += doughIncrement;
                 }
                 else
                 {
@@ -359,7 +443,7 @@ public class GameManager : MonoBehaviour
                 Dough = (uint)target;
                 break;
             case GoodsType.GOLD:
-                offset = (target - gold) / duration;
+                offset = (target - current) / duration;
 
                 if (offset >= 0.0f)
                 {
@@ -370,6 +454,8 @@ public class GameManager : MonoBehaviour
 
                         yield return null;
                     }
+
+                    totalGold += SellButton.Income;
                 }
                 else
                 {
@@ -415,7 +501,7 @@ public class GameManager : MonoBehaviour
         {
             if (currentCombo > maxCombo)
             {
-                maxCombo = currentCombo;
+                totalMaxCombo = maxCombo = currentCombo;
             }
 
             currentCombo = lastCombo = 0;
@@ -477,98 +563,111 @@ public class GameManager : MonoBehaviour
         skillStatus = skillStatus & ~Constants.USING_SKILL1;
     }
 
+    private IEnumerator AutoSave(float cycleTime)
+    {
+        WaitForSeconds delayTime = new WaitForSeconds(cycleTime);
+
+        while (true)
+        {
+            SaveData();
+
+            yield return delayTime;
+        }
+    }
+
     public void SaveData()
     {
         // GameManager Data
         PlayerPrefs.SetInt("GOLD", (int)gold);
-        PlayerPrefs.SetInt("DOUGH", (int)dough);
-        PlayerPrefs.SetInt("DOUGH_INCREMENT", (int)doughIncrement);
-        PlayerPrefs.SetInt("MAX_COMBO", (int)maxCombo);
+        PlayerPrefs.SetInt("TOTAL_GOLD", (int)totalGold);
 
-        // Sell Button Data
+        PlayerPrefs.SetInt("DOUGH", (int)dough);
+        PlayerPrefs.SetInt("TOTAL_DOUGH", (int)totalDough);
+        PlayerPrefs.SetInt("DOUGH_INCREMENT", (int)doughIncrement);
+
+        PlayerPrefs.SetInt("MAX_COMBO", (int)maxCombo);
+        PlayerPrefs.SetInt("TOTAL_COMBO", (int)totalCombo);
+        PlayerPrefs.SetInt("TOTAL_MAX_COMBO", (int)totalMaxCombo);
+
+        PlayerPrefs.SetInt("SKILL_STATUS", (int)skillStatus);
+
+        // SellButton Data
         PlayerPrefs.SetInt("INCOME", (int)SellButton.Income);
         PlayerPrefs.SetInt("SALES", (int)SellButton.Sales);
 
-        // Whisk Button Data
-        //PlayerPrefs.SetInt("WHISK_LEVEL", (int)WhiskButton.Level);
+        // AchievementButton Data
+        PlayerPrefs.SetInt("GOLD_INDEX", (int)AchievementButton.GoldIndex);
+        PlayerPrefs.SetInt("DOUGH_INDEX", (int)AchievementButton.DoughIndex);
+        PlayerPrefs.SetInt("COMBO_INDEX", (int)AchievementButton.ComboIndex);
+        PlayerPrefs.SetInt("MAX_COMBO_INDEX", (int)AchievementButton.MaxComboIndex);
 
-        // Recipe Button Data
-        //PlayerPrefs.SetInt("RECIPE_LEVEL", (int)RecipeButton.Level);
+        // ShopButton Data
+        PlayerPrefs.SetInt("WHISK_LEVEL", (int)ShopButton.WhiskLevel);
+        PlayerPrefs.SetInt("RECIPE_LEVEL", (int)ShopButton.RecipeLevel);
     }
 
     public void LoadData()
     {
-        if (PlayerPrefs.HasKey("GOLD"))
-        {
-            Gold = (uint)PlayerPrefs.GetInt("GOLD");
-        }
-        else
-        {
-            Gold = 10000000;
-        }
+        // GameManager Data
+        if (PlayerPrefs.HasKey("GOLD")) Gold = (uint)PlayerPrefs.GetInt("GOLD");
+        else Gold = 9999999;
 
-        if (PlayerPrefs.HasKey("DOUGH"))
-        {
-            Dough = (uint)PlayerPrefs.GetInt("DOUGH");
-        }
-        else
-        {
-            Dough = 10000000;
-        }
+        if (PlayerPrefs.HasKey("TOTAL_GOLD")) TotalGold = (uint)PlayerPrefs.GetInt("TOTAL_GOLD");
+        else TotalGold = Gold;
 
-        if (PlayerPrefs.HasKey("DOUGH_INCREMENT"))
-        {
-            DoughIncrement = (uint)PlayerPrefs.GetInt("DOUGH_INCREMENT");
-        }
-        else
-        {
-            DoughIncrement = 500;
-        }
+        if (PlayerPrefs.HasKey("DOUGH")) Dough = (uint)PlayerPrefs.GetInt("DOUGH");
+        else Dough = 9999999;
 
-        if (PlayerPrefs.HasKey("MAX_COMBO"))
-        {
-            maxCombo = (uint)PlayerPrefs.GetInt("MAX_COMBO");
-        }
-        else
-        {
-            maxCombo = 0;
-        }
+        if (PlayerPrefs.HasKey("TOTAL_DOUGH")) TotalDough = (uint)PlayerPrefs.GetInt("TOTAL_DOUGH");
+        else TotalDough = Dough;
 
-        if (PlayerPrefs.HasKey("INCOME"))
-        {
-            SellButton.Income = (uint)PlayerPrefs.GetInt("INCOME");
-        }
-        else
-        {
-            SellButton.Income = 100;
-        }
+        if (PlayerPrefs.HasKey("DOUGH_INCREMENT")) DoughIncrement = (uint)PlayerPrefs.GetInt("DOUGH_INCREMENT");
+        else DoughIncrement = 500;
 
-        if (PlayerPrefs.HasKey("SALES"))
-        {
-            SellButton.Sales = (uint)PlayerPrefs.GetInt("SALES");
-        }
-        else
-        {
-            SellButton.Sales = 100;
-        }
+        if (PlayerPrefs.HasKey("MAX_COMBO")) maxCombo = (uint)PlayerPrefs.GetInt("MAX_COMBO");
+        else maxCombo = 0;
 
-        if (PlayerPrefs.HasKey("WHISK_LEVEL"))
-        {
-            //WhiskButton.Level = (uint)PlayerPrefs.GetInt("WHISK_LEVEL");
-        }
-        else
-        {
-            //WhiskButton.Level = 1;
-        }
+        if (PlayerPrefs.HasKey("TOTAL_COMBO")) totalCombo = (uint)PlayerPrefs.GetInt("TOTAL_COMBO");
+        else totalCombo = 0;
 
-        if (PlayerPrefs.HasKey("RECIPE_LEVEL"))
+        if (PlayerPrefs.HasKey("TOTAL_MAX_COMBO")) totalMaxCombo = (uint)PlayerPrefs.GetInt("TOTAL_MAX_COMBO");
+        else totalMaxCombo = 0;
+
+        if (PlayerPrefs.HasKey("SKILL_STATUS"))
         {
-            //RecipeButton.Level = (uint)PlayerPrefs.GetInt("RECIPE_LEVEL");
+            skillStatus = PlayerPrefs.GetInt("SKILL_STATUS");
+
+            if (HasSkill(SkillType.AUTO_SELL)) skillButtons[0].gameObject.SetActive(true);
+            if (HasSkill(SkillType.PLUS_FEVER_TIME)) skillButtons[1].gameObject.SetActive(true);
         }
-        else
-        {
-            //RecipeButton.Level = 1;
-        }
+        else skillStatus = 0x00000000;
+
+        // SellButton Data
+        if (PlayerPrefs.HasKey("SALES")) SellButton.Sales = (uint)PlayerPrefs.GetInt("SALES");
+        else SellButton.Sales = 100;
+
+        if (PlayerPrefs.HasKey("INCOME")) SellButton.Income = (uint)PlayerPrefs.GetInt("INCOME");
+        else SellButton.Income = 100;
+        
+        // AchievementButton Data
+        if (PlayerPrefs.HasKey("GOLD_INDEX")) AchievementButton.GoldIndex = (uint)PlayerPrefs.GetInt("GOLD_INDEX");
+        else AchievementButton.GoldIndex = 0;
+
+        if (PlayerPrefs.HasKey("DOUGH_INDEX")) AchievementButton.DoughIndex = (uint)PlayerPrefs.GetInt("DOUGH_INDEX");
+        else AchievementButton.DoughIndex = 0;
+
+        if (PlayerPrefs.HasKey("COMBO_INDEX")) AchievementButton.ComboIndex = (uint)PlayerPrefs.GetInt("COMBO_INDEX");
+        else AchievementButton.ComboIndex = 0;
+
+        if (PlayerPrefs.HasKey("MAX_COMBO_INDEX")) AchievementButton.MaxComboIndex = (uint)PlayerPrefs.GetInt("MAX_COMBO_INDEX");
+        else AchievementButton.MaxComboIndex = 0;
+
+        // ShopButton Data
+        if (PlayerPrefs.HasKey("WHISK_LEVEL")) ShopButton.WhiskLevel = (uint)PlayerPrefs.GetInt("WHISK_LEVEL");
+        else ShopButton.WhiskLevel = 1;
+
+        if (PlayerPrefs.HasKey("RECIPE_LEVEL")) ShopButton.RecipeLevel = (uint)PlayerPrefs.GetInt("RECIPE_LEVEL");
+        else ShopButton.RecipeLevel = 1;
     }
 
     public void ResetData()
@@ -578,7 +677,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        //SaveData();
+        SaveData();
         //ResetData();
     }
 }

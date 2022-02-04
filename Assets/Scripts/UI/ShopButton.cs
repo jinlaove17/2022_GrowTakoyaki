@@ -23,12 +23,14 @@ public class ShopButton : MonoBehaviour
     private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
 
     // 휘젓개 아이템 관련 정보
-    public static uint whiskLevel = 0;
-    private uint[] whiskPrice = new uint[] { 0, 5000, 30000, 180000, 500000, 1000000 };
+    private static uint whiskLevel = 1;
+    private const uint maxWhiskLevel = 5;
+    private uint[] whiskPrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
     // 레시피 아이템 관련 정보
-    public static uint recipeLevel = 0;
-    private uint[] recipePrice = new uint[] { 0, 5000, 30000, 180000, 500000, 1000000 };
+    private static uint recipeLevel = 1;
+    private const uint maxRecipeLevel = 5;
+    private uint[] recipePrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
     // 도감 객체
     public DictButton dictionaryInfo = null;
@@ -49,6 +51,32 @@ public class ShopButton : MonoBehaviour
         }
     }
 
+    public static uint WhiskLevel
+    {
+        set
+        {
+            whiskLevel = value;
+        }
+
+        get
+        {
+            return whiskLevel;
+        }
+    }
+
+    public static uint RecipeLevel
+    {
+        set
+        {
+            recipeLevel = value;
+        }
+
+        get
+        {
+            return recipeLevel;
+        }
+    }
+
     private void Awake()
     {
         GameObject shop = GameObject.Find("Shop");
@@ -57,9 +85,10 @@ public class ShopButton : MonoBehaviour
         GameObject category = shop.transform.GetChild(1).gameObject;
         GameManager.CheckNull(category);
 
-        categoryButtonImages = new Image[category.transform.childCount];
+        int childCount = category.transform.childCount;
+        categoryButtonImages = new Image[childCount];
 
-        for (int i = 0; i < category.transform.childCount; ++i)
+        for (int i = 0; i < childCount; ++i)
         {
             categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
             GameManager.CheckNull(categoryButtonImages[i]);
@@ -68,18 +97,20 @@ public class ShopButton : MonoBehaviour
         GameObject contents = shop.transform.GetChild(2).gameObject;
         GameManager.CheckNull(contents);
 
-        shopContents = new GameObject[categoryButtonImages.Length];
+        shopContents = new GameObject[childCount];
 
-        for (int i = 0; i < categoryButtonImages.Length; ++i)
+        for (int i = 0; i < childCount; ++i)
         {
             shopContents[i] = contents.transform.GetChild(i).gameObject;
             GameManager.CheckNull(shopContents[i]);
         }
 
+        // 휘젓개와 레시피 컨텐츠의 마지막 자식인 구매 버튼의 텍스트 객체를 저장한다.
+        // 0: Whisk, 1: Recipe
         buyButtonTexts = new Text[2];
 
-        // 각 컨텐츠의 마지막 자식인 구매 버튼의 텍스트 객체를 가져온다.
-        for (int i = 0; i < buyButtonTexts.Length; ++i)
+        childCount = buyButtonTexts.Length;
+        for (int i = 0; i < childCount; ++i)
         {
             buyButtonTexts[i] = shopContents[i].transform.GetChild(shopContents[i].transform.childCount - 1).GetComponentInChildren<Text>();
             GameManager.CheckNull(buyButtonTexts[i]);
@@ -94,35 +125,106 @@ public class ShopButton : MonoBehaviour
         SoundManager.instance.RegisterAudioclip("Buy", audioClips[2]);
     }
 
-    private void UpgradeWhisk()
+    private void Start()
+    {
+        LoadData();
+    }
+
+    private void LoadData()
     {
         Transform whiskContent = shopContents[0].transform;
-        uint maxWhiskLevel = (uint)whiskContent.childCount - 1;
 
-        // 마지막 자식은 버튼이므로 < 연산자를 이용한다.
-        if (whiskLevel < maxWhiskLevel)
+        if (whiskLevel > 1)
         {
-            // 구매한 아이템의 도감을 해제한다.
-            dictionaryInfo.UnlockWhiskDict(whiskLevel, whiskContent.GetChild((int)whiskLevel).GetComponentsInChildren<Text>());
+            // 휘젓개 레벨이 1보다 크다면, 디폴트로 활성화된 0번 자식을 비활성화 시킨다.
+            whiskContent.GetChild(0).gameObject.SetActive(false);
 
-            // 다음 레벨의 휘젓개를 보여준다.
-            whiskContent.GetChild((int)whiskLevel).gameObject.SetActive(false);
-            whiskContent.GetChild((int)++whiskLevel).gameObject.SetActive(true);
-
-            // 해당 가격만큼 골드를 차감한 후, 클릭시 반죽량을 증가시킨다.
-            StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold - whiskPrice[whiskLevel], GameManager.instance.Gold));
-            GameManager.instance.DoughIncrement = (uint)(600.0f * Mathf.Pow(1.5f, whiskLevel));
-
-            // 최고 레벨에 달성하게 되면, 버튼도 지워준다.
             if (whiskLevel == maxWhiskLevel)
             {
-                // 마지막 자식인 버튼을 불러와 비활성화 시켜준다.
+                // 매진 이미지를 출력시킨다.
+                whiskContent.GetChild((int)(maxWhiskLevel - 1)).gameObject.SetActive(true);
+
+                // 만약 불러온 데이터가 최고 레벨일 경우, 마지막 자식인 버튼도 비활성화 시킨다.
                 whiskContent.GetChild((int)maxWhiskLevel).gameObject.SetActive(false);
             }
             else
             {
+                // 최고 레벨이 아닌 경우, 해당 레벨에 해당하는 휘젓개 정보를 활성화 시킨다.
+                whiskContent.GetChild((int)(whiskLevel - 1)).gameObject.SetActive(true);
+
+                // 버튼에 표시되는 아이템의 가격 또한 현재 레벨에 맞게 설정한다.
+                buyButtonTexts[0].text = string.Format("{0:#,0}", whiskPrice[whiskLevel - 1]) + "G";
+            }
+
+            // 해당 레벨전까지 도감을 해제시킨다.
+            for (int i = 1; i < whiskLevel; ++i)
+            {
+                dictionaryInfo.UnlockWhiskDict((uint)i, whiskContent.GetChild(i - 1).GetComponentsInChildren<Text>());
+            }
+        }
+
+        Transform recipeContent = shopContents[1].transform;
+
+        if (recipeLevel > 1)
+        {
+            // 휘젓개 레벨이 1보다 크다면, 디폴트로 활성화된 0번 자식을 비활성화 시킨다.
+            recipeContent.GetChild(0).gameObject.SetActive(false);
+
+            if (recipeLevel == maxRecipeLevel)
+            {
+                // 매진 이미지를 출력시킨다.
+                recipeContent.GetChild((int)(maxRecipeLevel - 1)).gameObject.SetActive(true);
+
+                // 만약 불러온 데이터가 최고 레벨일 경우, 마지막 자식인 버튼도 비활성화 시킨다.
+                recipeContent.GetChild((int)maxRecipeLevel).gameObject.SetActive(false);
+            }
+            else
+            {
+                // 최고 레벨이 아닌 경우, 해당 레벨에 해당하는 레시피 정보를 활성화 시킨다.
+                recipeContent.GetChild((int)(recipeLevel - 1)).gameObject.SetActive(true);
+
+                // 버튼에 표시되는 아이템의 가격 또한 현재 레벨에 맞게 설정한다.
+                buyButtonTexts[1].text = string.Format("{0:#,0}", recipePrice[recipeLevel - 1]) + "L";
+            }
+
+            // 해당 레벨전까지 도감을 해제시킨다.
+            for (int i = 1; i < recipeLevel; ++i)
+            {
+                dictionaryInfo.UnlockRecipeDict((uint)i, recipeContent.GetChild(i - 1).GetComponentsInChildren<Text>());
+            }
+        }
+    }
+
+    private void UpgradeWhisk()
+    {
+        Transform whiskContent = shopContents[0].transform;
+
+        if (whiskLevel < maxWhiskLevel)
+        {
+            // 구매한 아이템의 도감을 해제한다.
+            dictionaryInfo.UnlockWhiskDict(whiskLevel, whiskContent.GetChild((int)(whiskLevel - 1)).GetComponentsInChildren<Text>());
+
+            // 다음 레벨의 휘젓개를 보여준다.
+            whiskContent.GetChild((int)(whiskLevel - 1)).gameObject.SetActive(false);
+            whiskContent.GetChild((int)whiskLevel).gameObject.SetActive(true);
+
+            // 해당 가격만큼 골드를 차감한 후, 클릭시 반죽량을 증가시킨다.
+            StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold - whiskPrice[whiskLevel], GameManager.instance.Gold));
+            GameManager.instance.DoughIncrement = (uint)(500 * Mathf.Pow(2.0f, whiskLevel));
+
+            // 최고 레벨에 달성하게 되면, 버튼도 지워준다.
+            if (++whiskLevel == maxWhiskLevel)
+            {
+                // 매진 이미지를 출력한다.
+                whiskContent.GetChild((int)(maxWhiskLevel - 1)).gameObject.SetActive(true);
+
+                // 마지막 자식인 버튼을 불러와 비활성화 시켜준다.
+                whiskContent.GetChild((int)(maxWhiskLevel)).gameObject.SetActive(false);
+            }
+            else
+            {
                 // 그 외의 경우에는 버튼 내의 텍스트(가격)만 변경시킨다.
-                buyButtonTexts[0].text = string.Format("{0:#,0}", whiskPrice[whiskLevel + 1]) + "G";
+                buyButtonTexts[0].text = string.Format("{0:#,0}", whiskPrice[whiskLevel]) + "G";
             }
 
             // 구매하는 사운드를 출력한다.
@@ -133,33 +235,36 @@ public class ShopButton : MonoBehaviour
     private void UpgradeRecipe()
     {
         Transform recipeContent = shopContents[1].transform;
-        uint maxWhiskLevel = (uint)recipeContent.childCount - 1;
 
-        // 마지막 자식은 버튼이므로 < 연산자를 이용한다.
-        if (recipeLevel < maxWhiskLevel)
+        if (recipeLevel < maxRecipeLevel)
         {
             // 구매한 아이템의 도감을 해제한다.
-            dictionaryInfo.UnlockRecipeDict(recipeLevel, recipeContent.GetChild((int)recipeLevel).GetComponentsInChildren<Text>());
+            dictionaryInfo.UnlockRecipeDict(recipeLevel, recipeContent.GetChild((int)(recipeLevel - 1)).GetComponentsInChildren<Text>());
 
-            // 다음 레벨의 휘젓개를 보여준다.
-            recipeContent.GetChild((int)recipeLevel).gameObject.SetActive(false);
-            recipeContent.GetChild((int)++recipeLevel).gameObject.SetActive(true);
+            // 다음 레벨의 레시피를 보여준다.
+            recipeContent.GetChild((int)(recipeLevel - 1)).gameObject.SetActive(false);
+            recipeContent.GetChild((int)recipeLevel).gameObject.SetActive(true);
 
             // 해당 가격만큼 골드를 차감한 후, 클릭시 반죽량을 증가시킨다.
             StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold - recipePrice[recipeLevel], GameManager.instance.Gold));
-            SellButton.Sales = (uint)(100.0f * Mathf.Pow(2.25f, recipeLevel));
-            SellButton.Income = (uint)(100.0f * Mathf.Pow(2.5f, recipeLevel));
+
+            string[] texts = recipeContent.GetChild((int)recipeLevel - 1).transform.GetChild(2).GetComponent<Text>().text.Split(' ');
+            SellButton.Sales = uint.Parse(texts[3].Replace("L\n획득", "").Replace(",", ""));
+            SellButton.Income = uint.Parse(texts[texts.Length - 1].Replace("G", "").Replace(",", ""));
 
             // 최고 레벨에 달성하게 되면, 버튼도 지워준다.
-            if (recipeLevel == maxWhiskLevel)
+            if (++recipeLevel == maxRecipeLevel)
             {
+                // 매진 이미지를 출력한다.
+                recipeContent.GetChild((int)(maxRecipeLevel - 1)).gameObject.SetActive(true);
+
                 // 마지막 자식인 버튼을 불러와 비활성화 시켜준다.
-                recipeContent.GetChild((int)maxWhiskLevel).gameObject.SetActive(false);
+                recipeContent.GetChild((int)(maxRecipeLevel)).gameObject.SetActive(false);
             }
             else
             {
                 // 그 외의 경우에는 버튼 내의 텍스트(가격)만 변경시킨다.
-                buyButtonTexts[1].text = string.Format("{0:#,0}", recipePrice[recipeLevel + 1]) + "G";
+                buyButtonTexts[1].text = string.Format("{0:#,0}", recipePrice[recipeLevel]) + "G";
             }
 
             // 구매하는 사운드를 출력한다.
@@ -215,30 +320,44 @@ public class ShopButton : MonoBehaviour
 
     public void OnClickBuyWhiskButton()
     {
-        if (GameManager.instance.Gold >= whiskPrice[whiskLevel + 1])
+        if (whiskLevel < maxWhiskLevel)
         {
-            if (GameManager.instance.IsFeverMode)
+            if (GameManager.instance.Gold >= whiskPrice[whiskLevel])
             {
-                GameManager.instance.PrintMessage("피버모드 중에는 업그레이드할 수 없어요.");
+                if (GameManager.instance.IsFeverMode)
+                {
+                    GameManager.instance.PrintMessage("피버모드 중에는 업그레이드할 수 없어요.");
+                }
+                else
+                {
+                    UpgradeWhisk();
+                }
             }
             else
             {
-                UpgradeWhisk();
+                GameManager.instance.PrintMessage("골드가 모자라요ㅠㅠ");
             }
         }
     }
 
     public void OnClickBuyRecipeButton()
     {
-        if (GameManager.instance.Gold >= recipePrice[recipeLevel + 1])
+        if (recipeLevel < maxRecipeLevel)
         {
-            if (GameManager.instance.IsFeverMode)
+            if (GameManager.instance.Gold >= recipePrice[recipeLevel])
             {
-                GameManager.instance.PrintMessage("피버모드 중에는 업그레이드할 수 없어요.");
+                if (GameManager.instance.IsFeverMode)
+                {
+                    GameManager.instance.PrintMessage("피버모드 중에는 업그레이드할 수 없어요.");
+                }
+                else
+                {
+                    UpgradeRecipe();
+                }
             }
             else
             {
-                UpgradeRecipe();
+                GameManager.instance.PrintMessage("골드가 모자라요ㅠㅠ");
             }
         }
     }
@@ -260,6 +379,14 @@ public class ShopButton : MonoBehaviour
                 // 구매하는 사운드를 출력한다.
                 SoundManager.instance.PlaySFX("Buy");
             }
+            else
+            {
+                GameManager.instance.PrintMessage("이미 스킬을 가지고 계시군요!");
+            }
+        }
+        else
+        {
+            GameManager.instance.PrintMessage("최대 콤보가 모자라요ㅠㅠ(현재 : " + GameManager.instance.MaxCombo + ")");
         }
     }
 
@@ -280,6 +407,14 @@ public class ShopButton : MonoBehaviour
                 // 구매하는 사운드를 출력한다.
                 SoundManager.instance.PlaySFX("Buy");
             }
+            else
+            {
+                GameManager.instance.PrintMessage("이미 스킬을 가지고 계시군요!");
+            }
+        }
+        else
+        {
+            GameManager.instance.PrintMessage("최대 콤보가 모자라요ㅠㅠ(현재 : " + GameManager.instance.MaxCombo + ")");
         }
     }
 }

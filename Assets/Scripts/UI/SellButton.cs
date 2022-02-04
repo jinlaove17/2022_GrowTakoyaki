@@ -5,34 +5,21 @@ using UnityEngine.UI;
 
 public class SellButton : MonoBehaviour
 {
-    // 타코야키 판매시 획득하는 골드량
-    private static uint income = 0;
-
     // 타코야키 판매시 소모되는 반죽량
     private static uint sales = 0;
     private static Text salesText = null;
+
+    // 타코야키 판매시 획득하는 골드량
+    private static uint income = 0;
 
     private Vector3 particlePosition = Vector3.zero;
     private Vector3 incomeTextPosition = Vector3.zero;
 
     public GameObject particlePrefab = null;
     public GameObject goldTextPrefab = null;
-    
+
     // 효과 사운드
     public AudioClip[] audioClips = null;
-
-    public static uint Income
-    {
-        set
-        {
-            income = value;
-        }
-
-        get
-        {
-            return income;
-        }
-    }
 
     public static uint Sales
     {
@@ -45,6 +32,19 @@ public class SellButton : MonoBehaviour
         get
         {
             return sales;
+        }
+    }
+
+    public static uint Income
+    {
+        set
+        {
+            income = value;
+        }
+
+        get
+        {
+            return income;
         }
     }
 
@@ -78,13 +78,17 @@ public class SellButton : MonoBehaviour
 
             // 판매 파티클 이펙트 출력
             Instantiate(particlePrefab, particlePosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
-            
+
             // 획득 골드 텍스트 이펙트 출력
             GameObject goldText = Instantiate(goldTextPrefab, incomeTextPosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
             goldText.GetComponent<Text>().text = "+" + Income.ToString() + "G";
 
             // 판매 사운드 출력
             SoundManager.instance.PlaySFX("SELL");
+        }
+        else
+        {
+            GameManager.instance.PrintMessage("반죽량이 모자라요ㅠㅠ");
         }
     }
 }

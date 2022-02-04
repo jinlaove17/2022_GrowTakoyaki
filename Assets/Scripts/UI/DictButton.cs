@@ -8,7 +8,7 @@ public class DictButton : MonoBehaviour
     // 도감창이 열려있는지에 대한 여부
     private static bool isOpened = false;
 
-    // 0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet
+    // 0: Whisk, 1: Recipe, 2: Building, 3: Cat, 4: Pet
     private Image[] categoryButtonImages = null;
     private GameObject[] dictContents = null;
 
@@ -43,9 +43,10 @@ public class DictButton : MonoBehaviour
         GameObject category = dictionary.transform.GetChild(1).gameObject;
         GameManager.CheckNull(category);
 
-        categoryButtonImages = new Image[category.transform.childCount];
-
-        for (int i = 0; i < category.transform.childCount; ++i)
+        int childCount = category.transform.childCount;
+        categoryButtonImages = new Image[childCount];
+        
+        for (int i = 0; i < childCount; ++i)
         {
             categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
             GameManager.CheckNull(categoryButtonImages[i]);
@@ -54,9 +55,10 @@ public class DictButton : MonoBehaviour
         GameObject contents = dictionary.transform.GetChild(2).gameObject;
         GameManager.CheckNull(contents);
 
-        dictContents = new GameObject[categoryButtonImages.Length];
+        int arrayLength = categoryButtonImages.Length;
+        dictContents = new GameObject[arrayLength];
 
-        for (int i = 0; i < categoryButtonImages.Length; ++i)
+        for (int i = 0; i < arrayLength; ++i)
         {
             dictContents[i] = contents.transform.GetChild(i).gameObject;
             GameManager.CheckNull(dictContents[i]);
@@ -129,14 +131,16 @@ public class DictButton : MonoBehaviour
 
     public void OnClickCategoryButton(int index)
     {
-        if (index < 0 || index > categoryButtonImages.Length)
+        int arrayLength = categoryButtonImages.Length;
+
+        if (index < 0 || index >= arrayLength)
         {
             return;
         }
 
         if (!dictContents[index].activeSelf)
         {
-            for (int i = 0; i < categoryButtonImages.Length; ++i)
+            for (int i = 0; i < arrayLength; ++i)
             {
                 if (i == index)
                 {
