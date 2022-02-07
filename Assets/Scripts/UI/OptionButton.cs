@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class OptionButton : MonoBehaviour
 {
-    // 옵션창이 열렸는지에 대한 여부
+    // * 옵션창이 열렸는지에 대한 여부
     private static bool isOpened = false;
     
-    // 옵션창 객체
+    // * 옵션창
     private GameObject option = null;
 
-    // 배경음 및 효과음의 슬라이더 바
+    // * 사운드 관련 데이터
+    public AudioClip[] audioClips = null;
     private Slider bgmSlider = null;
     private Slider sfxSlider = null;
-
-    // 효과 사운드
-    public AudioClip[] audioClips = null;
 
     public static bool IsOpened
     {
@@ -34,15 +32,15 @@ public class OptionButton : MonoBehaviour
     private void Awake()
     {
         option = GameObject.Find("UI").transform.Find("Option").gameObject;
-        GameManager.CheckNull(option);
+        SystemManager.CheckNull(option);
 
         bgmSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).gameObject.GetComponent<Slider>();
-        GameManager.CheckNull(bgmSlider);
+        SystemManager.CheckNull(bgmSlider);
 
         sfxSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(4).gameObject.GetComponent<Slider>();
-        GameManager.CheckNull(sfxSlider);
+        SystemManager.CheckNull(sfxSlider);
 
-        GameManager.CheckNull(audioClips);
+        SystemManager.CheckNull(audioClips);
         SoundManager.instance.RegisterAudioclip("PAUSE_IN", audioClips[0]);
         SoundManager.instance.RegisterAudioclip("PAUSE_OUT", audioClips[1]);
     }
@@ -51,7 +49,7 @@ public class OptionButton : MonoBehaviour
     {
         if (isOpened)
         {
-            // 옵션창이 열려있을 때만, 배경음과 효과음을 슬라이더 바의 값에 따라 조정
+            // 옵션창이 열려있을 때만, 배경음과 효과음의 크기를 슬라이더 바의 값에 따라 조정
             SoundManager.instance.audioSources[(int)SoundType.BGM].volume = bgmSlider.value;
             SoundManager.instance.audioSources[(int)SoundType.SFX].volume = sfxSlider.value;
         }

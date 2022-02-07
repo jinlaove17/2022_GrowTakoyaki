@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: YellowCat
+  m_Name: YellowCatAnim
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -65,13 +65,11 @@ AnimationClip:
       value: {fileID: -4294247895566988766, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
     - time: 1.8333334
       value: {fileID: 8299603949672280677, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
-    - time: 1.9166666
-      value: {fileID: 6689856156442746426, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
     attribute: m_Sprite
     path: 
-    classID: 212
-    script: {fileID: 0}
-  m_SampleRate: 12
+    classID: 114
+    script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -80,10 +78,10 @@ AnimationClip:
     genericBindings:
     - serializedVersion: 2
       path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
+      attribute: 2015549526
+      script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+      typeID: 114
+      customType: 0
       isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 5869386830034153533, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
@@ -109,13 +107,12 @@ AnimationClip:
     - {fileID: 7926511958352168335, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
     - {fileID: -4294247895566988766, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
     - {fileID: 8299603949672280677, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
-    - {fileID: 6689856156442746426, guid: 27a167d4c4d0bf9478be445dbf75a3c7, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2
+    m_StopTime: 1.85
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

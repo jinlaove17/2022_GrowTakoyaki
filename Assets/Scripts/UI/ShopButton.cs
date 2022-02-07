@@ -3,39 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PetType
+{
+    RED_CAT,
+    YELLOW_CAT,
+    GREEN_CAT,
+    ENUM_COUNT
+}
+
 public class ShopButton : MonoBehaviour
 {
-    // 상점창이 열렸는지에 대한 여부
+    // * 상점창이 열렸는지에 대한 여부
     private static bool isOpened = false;
 
+    // * 카테고리/컨텐츠 관련 데이터
     // 0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet
     private Image[] categoryButtonImages = null;
     private GameObject[] shopContents = null;
 
+    // * 펫 관련 데이터
+    private Transform pets = null;
+
+    // * 구매 버튼 관련 데이터
     // 0: Whisk, 1: Recipe
     private Text[] buyButtonTexts = null;
 
-    // 상점 열기/닫기의 애니메이터
+    // * 상점의 애니메이션 관련 데이터
     private Animator shopAnimator = null;
 
-    // 카테고리 버튼의 활성/비활성 색상
+    // * 카테고리 버튼의 활성/비활성 색상
     private Color activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
     private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
 
-    // 휘젓개 아이템 관련 정보
+    // * 휘젓개 아이템 관련 데이터
     private static uint whiskLevel = 1;
     private const uint maxWhiskLevel = 5;
     private uint[] whiskPrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
-    // 레시피 아이템 관련 정보
+    // * 레시피 아이템 관련 데이터
     private static uint recipeLevel = 1;
     private const uint maxRecipeLevel = 5;
     private uint[] recipePrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
-    // 도감 객체
+    // * 도감 관련 데이터
     public DictButton dictionaryInfo = null;
 
-    // 효과 사운드
+    // * 사운드 관련 데이터
     public AudioClip[] audioClips = null;
 
     public static bool IsOpened
@@ -80,10 +93,10 @@ public class ShopButton : MonoBehaviour
     private void Awake()
     {
         GameObject shop = GameObject.Find("Shop");
-        GameManager.CheckNull(shop);
+        SystemManager.CheckNull(shop);
 
         GameObject category = shop.transform.GetChild(1).gameObject;
-        GameManager.CheckNull(category);
+        SystemManager.CheckNull(category);
 
         int childCount = category.transform.childCount;
         categoryButtonImages = new Image[childCount];
@@ -91,19 +104,22 @@ public class ShopButton : MonoBehaviour
         for (int i = 0; i < childCount; ++i)
         {
             categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
-            GameManager.CheckNull(categoryButtonImages[i]);
+            SystemManager.CheckNull(categoryButtonImages[i]);
         }
 
         GameObject contents = shop.transform.GetChild(2).gameObject;
-        GameManager.CheckNull(contents);
+        SystemManager.CheckNull(contents);
 
         shopContents = new GameObject[childCount];
 
         for (int i = 0; i < childCount; ++i)
         {
             shopContents[i] = contents.transform.GetChild(i).gameObject;
-            GameManager.CheckNull(shopContents[i]);
+            SystemManager.CheckNull(shopContents[i]);
         }
+
+        pets = GameObject.Find("Canvas").transform.GetChild(0).GetChild(5);
+        SystemManager.CheckNull(pets);
 
         // 휘젓개와 레시피 컨텐츠의 마지막 자식인 구매 버튼의 텍스트 객체를 저장한다.
         // 0: Whisk, 1: Recipe
@@ -113,16 +129,19 @@ public class ShopButton : MonoBehaviour
         for (int i = 0; i < childCount; ++i)
         {
             buyButtonTexts[i] = shopContents[i].transform.GetChild(shopContents[i].transform.childCount - 1).GetComponentInChildren<Text>();
-            GameManager.CheckNull(buyButtonTexts[i]);
+            SystemManager.CheckNull(buyButtonTexts[i]);
         }
 
         shopAnimator = shop.GetComponent<Animator>();
-        GameManager.CheckNull(shopAnimator);
+        SystemManager.CheckNull(shopAnimator);
 
-        GameManager.CheckNull(audioClips);
+        SystemManager.CheckNull(audioClips);
         SoundManager.instance.RegisterAudioclip("BookSlap", audioClips[0]);
         SoundManager.instance.RegisterAudioclip("BookFlip", audioClips[1]);
         SoundManager.instance.RegisterAudioclip("Buy", audioClips[2]);
+        SoundManager.instance.RegisterAudioclip("Meow1", audioClips[3]);
+        SoundManager.instance.RegisterAudioclip("Meow2", audioClips[4]);
+        SoundManager.instance.RegisterAudioclip("Meow3", audioClips[5]);
     }
 
     private void Start()
@@ -415,6 +434,71 @@ public class ShopButton : MonoBehaviour
         else
         {
             GameManager.instance.PrintMessage("최대 콤보가 모자라요ㅠㅠ(현재 : " + GameManager.instance.MaxCombo + ")");
+        }
+    }
+
+    public void OnClickBuyPetButton(int index)
+    {
+        PetType petType = (PetType)index;
+
+        if (petType < 0 || petType >= PetType.ENUM_COUNT)
+        {
+            return;
+        }
+
+        const int price = 10000000;
+
+        if (GameManager.instance.Gold >= price)
+        {
+            StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
+
+            Transform content = shopContents[5].transform.GetChild(0);
+            Transform pet = null;
+
+            switch (petType)
+            {
+                case PetType.RED_CAT:
+                    SoundManager.instance.PlaySFX("Meow1");
+                    break;
+                case PetType.YELLOW_CAT:
+                    SoundManager.instance.PlaySFX("Meow2");
+                    GameManager.instance.DoughIncrementPerSec = 10;
+                    break;
+                case PetType.GREEN_CAT:
+                    SoundManager.instance.PlaySFX("Meow3");
+                    break;
+            }
+
+            GameManager.instance.GetPet(petType);
+
+            // 펫이 화면에 렌더링 되도록 활성화 시킨다.
+            pet = pets.GetChild(index);
+            pet.gameObject.SetActive(true);
+
+            // 상점창에서 해당 펫에 대한 내용을 비활성화 시킨다.
+            content.GetChild(index).gameObject.SetActive(false);
+
+            // 모든 펫을 가지고 있는지 검사하여 상점에 펫이 매진되었는지 판단한다.
+            bool isSoldOut = true;
+            int enumCount = (int)PetType.ENUM_COUNT;
+
+            for (int i = 0; i < enumCount; ++i)
+            {
+                if (!GameManager.instance.HasPet((PetType)i))
+                {
+                    isSoldOut = false;
+                    break;
+                }
+            }
+
+            if (isSoldOut)
+            {
+                // 모든 펫이 팔렸다면 매진 이미지를 출력한다.
+                content.GetChild(enumCount).gameObject.SetActive(true);
+            }
+
+            // 구매 사운드를 출력한다.
+            SoundManager.instance.PlaySFX("Buy");
         }
     }
 }

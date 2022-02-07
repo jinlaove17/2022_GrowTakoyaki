@@ -5,21 +5,22 @@ using UnityEngine.UI;
 
 public class DictButton : MonoBehaviour
 {
-    // 도감창이 열려있는지에 대한 여부
+    // * 도감창이 열려있는지에 대한 여부
     private static bool isOpened = false;
 
+    // * 카테고리/컨텐츠 관련 데이터
     // 0: Whisk, 1: Recipe, 2: Building, 3: Cat, 4: Pet
     private Image[] categoryButtonImages = null;
     private GameObject[] dictContents = null;
 
-    // 도감의 애니메이션 출력을 위한 애니메이터
+    // * 도감의 애니메이션 관련 데이터
     private Animator dictAnimator = null;
 
-    // 카테고리 버튼의 활성/비활성 색상
+    // * 카테고리 버튼의 활성/비활성 색상
     private Color activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
     private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
 
-    // 효과 사운드
+    // * 사운드 관련 데이터
     public AudioClip[] audioClips = null;
 
     public static bool IsOpened
@@ -38,10 +39,10 @@ public class DictButton : MonoBehaviour
     private void Awake()
     {
         GameObject dictionary = GameObject.Find("Dictionary");
-        GameManager.CheckNull(dictionary);
+        SystemManager.CheckNull(dictionary);
 
         GameObject category = dictionary.transform.GetChild(1).gameObject;
-        GameManager.CheckNull(category);
+        SystemManager.CheckNull(category);
 
         int childCount = category.transform.childCount;
         categoryButtonImages = new Image[childCount];
@@ -49,11 +50,11 @@ public class DictButton : MonoBehaviour
         for (int i = 0; i < childCount; ++i)
         {
             categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
-            GameManager.CheckNull(categoryButtonImages[i]);
+            SystemManager.CheckNull(categoryButtonImages[i]);
         }
 
         GameObject contents = dictionary.transform.GetChild(2).gameObject;
-        GameManager.CheckNull(contents);
+        SystemManager.CheckNull(contents);
 
         int arrayLength = categoryButtonImages.Length;
         dictContents = new GameObject[arrayLength];
@@ -61,13 +62,13 @@ public class DictButton : MonoBehaviour
         for (int i = 0; i < arrayLength; ++i)
         {
             dictContents[i] = contents.transform.GetChild(i).gameObject;
-            GameManager.CheckNull(dictContents[i]);
+            SystemManager.CheckNull(dictContents[i]);
         }
 
         dictAnimator = dictionary.GetComponent<Animator>();
-        GameManager.CheckNull(dictAnimator);
+        SystemManager.CheckNull(dictAnimator);
 
-        GameManager.CheckNull(audioClips);
+        SystemManager.CheckNull(audioClips);
         SoundManager.instance.RegisterAudioclip("BookSlap", audioClips[0]);
         SoundManager.instance.RegisterAudioclip("BookFlip", audioClips[1]);
     }

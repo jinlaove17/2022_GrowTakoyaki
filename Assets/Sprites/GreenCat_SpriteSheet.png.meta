@@ -1,0 +1,1272 @@
+fileFormatVersion: 2
+guid: ac342eef6bdda484b8c72cf68e2d45e6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4746359002375349842
+    second: GreenCat_SpriteSheet_0
+  - first:
+      213: 3482277831096879339
+    second: GreenCat_SpriteSheet_1
+  - first:
+      213: 7499212611971975233
+    second: GreenCat_SpriteSheet_2
+  - first:
+      213: 1333756047012871967
+    second: GreenCat_SpriteSheet_3
+  - first:
+      213: 4308359661224443293
+    second: GreenCat_SpriteSheet_4
+  - first:
+      213: 1911475788394983924
+    second: GreenCat_SpriteSheet_5
+  - first:
+      213: 1897059799730167965
+    second: GreenCat_SpriteSheet_6
+  - first:
+      213: -3656392086788860445
+    second: GreenCat_SpriteSheet_7
+  - first:
+      213: 1336054080887455167
+    second: GreenCat_SpriteSheet_8
+  - first:
+      213: 1484098237477407382
+    second: GreenCat_SpriteSheet_9
+  - first:
+      213: 8663377498843649521
+    second: GreenCat_SpriteSheet_10
+  - first:
+      213: -8770878794932604870
+    second: GreenCat_SpriteSheet_11
+  - first:
+      213: -4508246552664028358
+    second: GreenCat_SpriteSheet_12
+  - first:
+      213: 722242642644457456
+    second: GreenCat_SpriteSheet_13
+  - first:
+      213: 1144104853534310869
+    second: GreenCat_SpriteSheet_14
+  - first:
+      213: 1881765446840642589
+    second: GreenCat_SpriteSheet_15
+  - first:
+      213: -7721730654729406128
+    second: GreenCat_SpriteSheet_16
+  - first:
+      213: 3267309720633565941
+    second: GreenCat_SpriteSheet_17
+  - first:
+      213: 3671782994679384276
+    second: GreenCat_SpriteSheet_18
+  - first:
+      213: -8935463743527206891
+    second: GreenCat_SpriteSheet_19
+  - first:
+      213: -3925709768964799885
+    second: GreenCat_SpriteSheet_20
+  - first:
+      213: -4415973931939892345
+    second: GreenCat_SpriteSheet_21
+  - first:
+      213: -2483149363887724875
+    second: GreenCat_SpriteSheet_22
+  - first:
+      213: -4740587013363380766
+    second: GreenCat_SpriteSheet_23
+  - first:
+      213: -325541725237976224
+    second: GreenCat_SpriteSheet_24
+  - first:
+      213: -588805904871907724
+    second: GreenCat_SpriteSheet_25
+  - first:
+      213: 326121287891922405
+    second: GreenCat_SpriteSheet_26
+  - first:
+      213: -5845953840413020658
+    second: GreenCat_SpriteSheet_27
+  - first:
+      213: -2431791687091923582
+    second: GreenCat_SpriteSheet_28
+  - first:
+      213: 3102740115987212889
+    second: GreenCat_SpriteSheet_29
+  - first:
+      213: -7309035932828243316
+    second: GreenCat_SpriteSheet_30
+  - first:
+      213: -8922407454281612326
+    second: GreenCat_SpriteSheet_31
+  - first:
+      213: 5347102310186293439
+    second: GreenCat_SpriteSheet_32
+  - first:
+      213: 3720197210936307458
+    second: GreenCat_SpriteSheet_33
+  - first:
+      213: 8744596978423891298
+    second: GreenCat_SpriteSheet_34
+  - first:
+      213: -7365048611389417773
+    second: GreenCat_SpriteSheet_35
+  - first:
+      213: -6631123342157333453
+    second: GreenCat_SpriteSheet_36
+  - first:
+      213: -4265396241025846026
+    second: GreenCat_SpriteSheet_37
+  - first:
+      213: -3063864082670363645
+    second: GreenCat_SpriteSheet_38
+  - first:
+      213: 1462888505041229634
+    second: GreenCat_SpriteSheet_39
+  - first:
+      213: -6543719714025738831
+    second: GreenCat_SpriteSheet_40
+  - first:
+      213: -4448898471499886014
+    second: GreenCat_SpriteSheet_41
+  - first:
+      213: -8277284869508306529
+    second: GreenCat_SpriteSheet_42
+  - first:
+      213: -8185270674427366165
+    second: GreenCat_SpriteSheet_43
+  - first:
+      213: 2554829001304685024
+    second: GreenCat_SpriteSheet_44
+  - first:
+      213: -7491451554635421017
+    second: GreenCat_SpriteSheet_45
+  - first:
+      213: -8019192575961744513
+    second: GreenCat_SpriteSheet_46
+  - first:
+      213: 7212800276975790378
+    second: GreenCat_SpriteSheet_47
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 2251
+        width: 214
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2566f098d547ed140800000000000000
+      internalID: 4746359002375349842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 2251
+        width: 214
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be84fbbcc39835030800000000000000
+      internalID: 3482277831096879339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 2251
+        width: 214
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14808b7532e821860800000000000000
+      internalID: 7499212611971975233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 2251
+        width: 212
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1f3b37ee04728210800000000000000
+      internalID: 1333756047012871967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 1325
+        y: 2251
+        width: 213
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9db7e3094e5acb30800000000000000
+      internalID: 4308359661224443293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 1644
+        y: 2251
+        width: 213
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1fa042a1de68a10800000000000000
+      internalID: 1911475788394983924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 1931
+        width: 213
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d90279836d5b35a10800000000000000
+      internalID: 1897059799730167965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 1931
+        width: 214
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5966bf4c2e14dc0800000000000000
+      internalID: -3656392086788860445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 1931
+        width: 213
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbdf10c9b1e9a8210800000000000000
+      internalID: 1336054080887455167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 1931
+        width: 211
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69acf90eb73989410800000000000000
+      internalID: 1484098237477407382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 1322
+        y: 1931
+        width: 211
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f510b54fef7a3870800000000000000
+      internalID: 8663377498843649521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 1642
+        y: 1931
+        width: 211
+        height: 281
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a303904c434974680800000000000000
+      internalID: -8770878794932604870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 1611
+        width: 211
+        height: 281
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3bc49465ad7f61c0800000000000000
+      internalID: -4508246552664028358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 1611
+        width: 211
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f7567c5bdbe50a00800000000000000
+      internalID: 722242642644457456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 1611
+        width: 211
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d186b47d4da0ef00800000000000000
+      internalID: 1144104853534310869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1611
+        width: 211
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1c6a8134bf5d1a10800000000000000
+      internalID: 1881765446840642589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 1322
+        y: 1611
+        width: 211
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 059fb9981e6e6d490800000000000000
+      internalID: -7721730654729406128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 1642
+        y: 1611
+        width: 211
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f26b8541e0d75d20800000000000000
+      internalID: 3267309720633565941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 1291
+        width: 210
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d84f220e2bc4f230800000000000000
+      internalID: 3671782994679384276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 1291
+        width: 211
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 510cdaf311bdef380800000000000000
+      internalID: -8935463743527206891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 1291
+        width: 211
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3728291b3c31589c0800000000000000
+      internalID: -3925709768964799885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 1291
+        width: 212
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78376511b1f47b2c0800000000000000
+      internalID: -4415973931939892345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 1291
+        width: 212
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b62c315fc41a8dd0800000000000000
+      internalID: -2483149363887724875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_23
+      rect:
+        serializedVersion: 2
+        x: 1644
+        y: 1291
+        width: 212
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ed45a16a3d063eb0800000000000000
+      internalID: -4740587013363380766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_24
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 971
+        width: 210
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0636f9396817b7bf0800000000000000
+      internalID: -325541725237976224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_25
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 971
+        width: 209
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47e157e262424d7f0800000000000000
+      internalID: -588805904871907724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_26
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 971
+        width: 209
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5edad7e559d968400800000000000000
+      internalID: 326121287891922405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 971
+        width: 209
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0ee9d094fffedea0800000000000000
+      internalID: -5845953840413020658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 971
+        width: 209
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2855323485a804ed0800000000000000
+      internalID: -2431791687091923582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 1649
+        y: 971
+        width: 208
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95aa5cb42b52f0b20800000000000000
+      internalID: 3102740115987212889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 651
+        width: 206
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8ae4354b86119a90800000000000000
+      internalID: -7309035932828243316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 651
+        width: 205
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad34f3a71bd3d2480800000000000000
+      internalID: -8922407454281612326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_32
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 651
+        width: 206
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb813509839b43a40800000000000000
+      internalID: 5347102310186293439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_33
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 651
+        width: 207
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20fe14427abc0a330800000000000000
+      internalID: 3720197210936307458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_34
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 651
+        width: 210
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26509eafe9c0b5970800000000000000
+      internalID: 8744596978423891298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_35
+      rect:
+        serializedVersion: 2
+        x: 1654
+        y: 651
+        width: 212
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d656a44f471ac990800000000000000
+      internalID: -7365048611389417773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_36
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 331
+        width: 212
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33c39e8147489f3a0800000000000000
+      internalID: -6631123342157333453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_37
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 331
+        width: 211
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f43e53c7b44ec4c0800000000000000
+      internalID: -4265396241025846026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_38
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 331
+        width: 209
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30cda5099d7fa75d0800000000000000
+      internalID: -3063864082670363645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_39
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 331
+        width: 207
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2471cf838593d4410800000000000000
+      internalID: 1462888505041229634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_40
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 331
+        width: 208
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bd66c717990035a0800000000000000
+      internalID: -6543719714025738831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_41
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 331
+        width: 209
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 242987459665242c0800000000000000
+      internalID: -4448898471499886014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_42
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 11
+        width: 209
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f99ed30244d212d80800000000000000
+      internalID: -8277284869508306529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_43
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 11
+        width: 210
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be4b55460b3186e80800000000000000
+      internalID: -8185270674427366165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_44
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 11
+        width: 211
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e9b1acc073947320800000000000000
+      internalID: 2554829001304685024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_45
+      rect:
+        serializedVersion: 2
+        x: 1011
+        y: 11
+        width: 211
+        height: 271
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aa68e1a084090890800000000000000
+      internalID: -7491451554635421017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_46
+      rect:
+        serializedVersion: 2
+        x: 1329
+        y: 11
+        width: 213
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7bb954f6da16b090800000000000000
+      internalID: -8019192575961744513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GreenCat_SpriteSheet_47
+      rect:
+        serializedVersion: 2
+        x: 1649
+        y: 11
+        width: 213
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a292bf803a3091460800000000000000
+      internalID: 7212800276975790378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,16 +5,15 @@ using UnityEngine;
 public class ScrollObject : MonoBehaviour
 {
     private RectTransform rectTransform = null;
+
     private float halfWidth = 0.0f;
     private float canvasHalfWidth = 0.0f;
-
-    public GameObject movableObject = null;
-    public float speed = 20.0f;
+    private float speed = 15.0f;
 
     private void Awake()
     {
-        rectTransform = movableObject.GetComponent<RectTransform>();
-        GameManager.CheckNull(rectTransform);
+        rectTransform = GetComponent<RectTransform>();
+        SystemManager.CheckNull(rectTransform);
     }
 
     private void Start()

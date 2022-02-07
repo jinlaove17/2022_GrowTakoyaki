@@ -4,24 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// 상수 값 정의
-static class Constants
-{
-    // 스킬의 상태(보유, 사용중 여부)
-    public const int HAS_SKILL1 = 0x00000001;
-    public const int HAS_SKILL2 = 0x00000002;
-    public const int USING_SKILL1 = 0x00000004;
-    public const int USING_SKILL2 = 0x00000008;
-}
-
-// 스킬의 종류(자동 판매, 피버모드 시간 증가)
+// * 스킬의 종류
 public enum SkillType
 {
     AUTO_SELL,
     PLUS_FEVER_TIME
 }
 
-// 재화의 종류(골드, 반죽량)
+// * 재화의 종류
 public enum GoodsType
 {
     GOLD,
@@ -30,166 +20,193 @@ public enum GoodsType
 
 public class GameManager : MonoBehaviour
 {
-    // 싱글톤 패턴
+    // * 싱글톤 패턴
     public static GameManager instance = null;
 
-    // 고양이의 애니메이션 출력을 위한 애니메이터
-    private Animator catAnimator = null;
-
     // 게임 데이터는 LoadData() 함수에서 PlayerPrefs를 이용하여 초기화를 수행한다.
+    // * 골드 관련 데이터
     private uint gold = 0;
     private uint totalGold = 0;
     private Text goldText = null;
 
+    // * 반죽량 관련 데이터
     private uint dough = 0;
     private uint totalDough = 0;
     private Text doughText = null;
     private uint doughIncrement = 0;
+    private uint doughIncrementPerSec = 1;
 
+    // * 콤보 관련 데이터
     private uint currentCombo = 0;
     private uint totalCombo = 0;
     private uint lastCombo = 0;
     private uint maxCombo = 0;
     private uint totalMaxCombo = 0;
 
-    // 피버모드 관련 데이터
+    // * 피버모드 관련 데이터
     private bool isFeverMode = false;
     private Image backgroundImage = null;
 
-    // 스킬 관련 처리를 하기 위한 데이터
+    // * 고양이 애니메이션 관련 데이터
+    private Animator catAnimator = null;
+
+    // * 스킬 관련 데이터
     private SellButton sellButton = null;
     private Button[] skillButtons = null;
     private int skillStatus = 0x00000000;
 
-    // 플레이어에게 안내메세지를 출력하기 위한 데이터
-    private Animator messageAnimator = null;
+    // * 안내 메시지 관련 데이터
     private Text messageText = null;
+    private Animator messageAnimator = null;
 
+    // * 펫 관련 데이터
+    private bool[] hasPet = new bool[] { false, false, false };
+
+    // * 캔버스 관련 데이터
     public RectTransform canvasRectTransform = null;
 
+    // * 프리팝 데이터
     public GameObject starPrefab = null;
     public GameObject scorePrefab = null;
     public GameObject comboPrefab = null;
     public GameObject feverPrefab = null;
 
+    // * 사운드 관련 데이터
     public AudioClip[] audioClips = null;
 
     public uint Gold
     {
-        set
-        {
-            gold = value;
-            goldText.text = string.Format("{0:#,0}", gold);
-        }
-
         get
         {
             return gold;
+        }
+
+        set
+        {
+            gold = value;
+
+            // 3자리마다 쉼표를 찍는다.
+            goldText.text = string.Format("{0:#,0}", gold);
         }
     }
 
     public uint TotalGold
     {
-        set
-        {
-            totalGold = value;
-        }
-
         get
         {
             return totalGold;
+        }
+
+        set
+        {
+            totalGold = value;
         }
     }
 
     public uint Dough
     {
-        set
-        {
-            dough = value;
-            doughText.text = string.Format("{0:#,0}", dough);
-        }
-
         get
         {
             return dough;
+        }
+
+        set
+        {
+            dough = value;
+
+            // 3자리마다 쉼표를 찍는다.
+            doughText.text = string.Format("{0:#,0}", dough);
         }
     }
 
     public uint TotalDough
     {
-        set
-        {
-            totalDough = value;
-        }
-
         get
         {
             return totalDough;
+        }
+
+        set
+        {
+            totalDough = value;
         }
     }
 
     public uint DoughIncrement
     {
-        set
-        {
-            doughIncrement = value;
-        }
-
         get
         {
             return doughIncrement;
         }
-    }
 
-    public uint Combo
-    {
         set
         {
-            currentCombo = value;
+            doughIncrement = value;
+        }
+    }
+
+    public uint DoughIncrementPerSec
+    {
+        get
+        {
+            return doughIncrementPerSec;
         }
 
+        set
+        {
+            doughIncrementPerSec = value;
+        }
+    }
+
+    public uint CurrentCombo
+    {
         get
         {
             return currentCombo;
+        }
+
+        set
+        {
+            currentCombo = value;
         }
     }
 
     public uint TotalCombo
     {
-        set
-        {
-            totalCombo = value;
-        }
-
         get
         {
             return totalCombo;
+        }
+
+        set
+        {
+            totalCombo = value;
         }
     }
 
     public uint MaxCombo
     {
-        set
-        {
-            maxCombo = value;
-        }
-
         get
         {
             return maxCombo;
+        }
+
+        set
+        {
+            maxCombo = value;
         }
     }
 
     public uint TotalMaxCombo
     {
-        set
-        {
-            totalMaxCombo = value;
-        }
-
         get
         {
             return totalMaxCombo;
+        }
+
+        set
+        {
+            totalMaxCombo = value;
         }
     }
 
@@ -201,44 +218,65 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GetPet(PetType petType)
+    {
+       if (petType < 0 || petType >= PetType.ENUM_COUNT)
+        {
+            return;
+        }
+
+        hasPet[(int)petType] = true;
+    }
+
+    public bool HasPet(PetType petType)
+    {
+        return (petType < 0 || petType >= PetType.ENUM_COUNT) ? false : hasPet[(int)petType];
+    }
+
     private void Awake()
     {
-        // 프레임을 60으로 고정시킨다.
+        // 60FPS
         Application.targetFrameRate = 60;
 
-        // 싱글톤 패턴
-        instance = this;
-
-        catAnimator = GameObject.Find("Cat").GetComponent<Animator>();
-        CheckNull(catAnimator);
+        if (instance == null)
+        {
+            instance = this;
+        }
 
         goldText = GameObject.Find("Gold").GetComponentInChildren<Text>();
-        CheckNull(goldText);
+        SystemManager.CheckNull(goldText);
 
         doughText = GameObject.Find("Dough").GetComponentInChildren<Text>();
-        CheckNull(doughText);
+        SystemManager.CheckNull(doughText);
 
         backgroundImage = canvasRectTransform.GetChild(0).gameObject.GetComponent<Image>();
-        CheckNull(backgroundImage);
+        SystemManager.CheckNull(backgroundImage);
+
+        catAnimator = GameObject.Find("Cat").GetComponent<Animator>();
+        SystemManager.CheckNull(catAnimator);
 
         sellButton = GameObject.Find("SellButton").GetComponent<SellButton>();
-        CheckNull(sellButton);
+        SystemManager.CheckNull(sellButton);
 
         skillButtons = new Button[2];
         skillButtons[0] = GameObject.Find("UI").transform.GetChild(3).GetComponent<Button>();
-        CheckNull(skillButtons[0]);
         skillButtons[1] = GameObject.Find("UI").transform.GetChild(4).GetComponent<Button>();
-        CheckNull(skillButtons[1]);
+        SystemManager.CheckNull(skillButtons[0]);
+        SystemManager.CheckNull(skillButtons[1]);
 
         GameObject messageObject = GameObject.Find("Message");
+        SystemManager.CheckNull(messageObject);
 
         messageAnimator = messageObject.GetComponent<Animator>();
-        CheckNull(messageAnimator);
-        messageText = messageObject.GetComponentInChildren<Text>();
-        CheckNull(messageText);
+        SystemManager.CheckNull(messageAnimator);
 
-        CheckNull(audioClips);
+        messageText = messageObject.GetComponentInChildren<Text>();
+        SystemManager.CheckNull(messageText);
+
+        SystemManager.CheckNull(audioClips);
         SoundManager.instance.RegisterAudioclip("Click", audioClips[0]);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -254,8 +292,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Dough += 1;
-        totalDough += 1;
+        Dough += doughIncrementPerSec;
+        totalDough += doughIncrementPerSec;
 
         if (IsClosed())
         {
@@ -264,40 +302,29 @@ public class GameManager : MonoBehaviour
                 Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
 
+                // 클릭한 위치가 ClickArea와 충돌한 경우에만, 이벤트를 발생시킨다.
                 if (hit.collider != null)
                 {
-                    StartCoroutine(UpdateCombo());
-                    StartCoroutine(Count(GoodsType.DOUGH, dough + doughIncrement, dough));
-                    GenerateEffect(position);
+                    position.z = -50.0f;
 
-                    totalCombo += 1;
+                    if (HasPet(PetType.RED_CAT))
+                    {
+                        // 성난 냥이 펫을 보유한다면, 반죽량을 10% 추가적으로 상승시킨다.
+                        StartCoroutine(Count(GoodsType.DOUGH, dough + 1.1f * doughIncrement, dough));
+                        GenerateEffectWithPet(position);
+                    }
+                    else
+                    {
+                        StartCoroutine(Count(GoodsType.DOUGH, dough + doughIncrement, dough));
+                        GenerateEffect(position);
+                    }
+
+                    StartCoroutine(UpdateCombo());
                 }
             }
         }
     }
 
-    public static void CheckNull(UnityEngine.Object obj)
-    {
-        if (!obj)
-        {
-            Debug.LogError(obj.name + "is null!");
-        }
-    }
-
-    public static void CheckNull(UnityEngine.Object[] objs)
-    {
-        foreach (UnityEngine.Object obj in objs)
-        {
-            if (!obj)
-            {
-                Debug.LogError(obj.name + "is null!");
-                return;
-            }
-        }
-    }
-
-    // 매개변수의 자료형이 uint면 유니티 엔진에서 인식되지 않는다는 것을 깨달음
-    // 또한 매개변수는 최대 1개까지만 전달이 가능함
     public void GetSkill(SkillType skillType)
     {
         switch (skillType)
@@ -313,6 +340,7 @@ public class GameManager : MonoBehaviour
 
     public bool HasSkill(SkillType skillType)
     {
+        // 해당 타입의 스킬을 가지고 있는지에 대한 여부를 리턴한다.
         switch (skillType)
         {
             case SkillType.AUTO_SELL:
@@ -326,6 +354,7 @@ public class GameManager : MonoBehaviour
 
     public bool UsingSkill(SkillType skillType)
     {
+        // 해당 타입의 스킬이 사용중인지에 대한 여부를 리턴한다.
         switch (skillType)
         {
             case SkillType.AUTO_SELL:
@@ -352,6 +381,7 @@ public class GameManager : MonoBehaviour
                     skillStatus |= Constants.USING_SKILL1;
                     break;
                 case SkillType.PLUS_FEVER_TIME:
+                    StartCoroutine(UpdateFeverMode(13.0f));
                     skillStatus = skillStatus & ~Constants.HAS_SKILL2;
                     skillStatus |= Constants.USING_SKILL2;
                     break;
@@ -375,7 +405,6 @@ public class GameManager : MonoBehaviour
     private void GenerateEffect(Vector3 position)
     {
         // 별 파티클 이펙트
-        position.z = -50.0f;
         Instantiate(starPrefab, position, Quaternion.identity, canvasRectTransform);
 
         // 획득 점수 텍스트 이펙트
@@ -393,8 +422,19 @@ public class GameManager : MonoBehaviour
         // 고양이의 애니메이션 트리거 발생
         catAnimator.SetTrigger("doTouch");
 
-        // 클릭사운드 출력
+        // 클릭 사운드 출력
         SoundManager.instance.PlaySFX("Click", 0.5f);
+    }
+
+    private void GenerateEffectWithPet(Vector3 position)
+    {
+        GenerateEffect(position);
+
+        position.y -= 120.0f;
+        GameObject scoreEffect = Instantiate(scorePrefab, position, Quaternion.identity, canvasRectTransform);
+        Text scoreText = scoreEffect.GetComponent<Text>();
+        scoreText.text = "+" + (0.1f * doughIncrement).ToString() + "L";
+        scoreText.fontSize -= 10;
     }
 
     public IEnumerator WaitAndCall<T>(Action<T> func, T param, float seconds)
@@ -406,9 +446,10 @@ public class GameManager : MonoBehaviour
         func(param);
     }
 
-    // 참고 : https://unitys.tistory.com/7
     public IEnumerator Count(GoodsType goods, float target, float current)
     {
+        // 참고 : https://unitys.tistory.com/7
+
         float duration = 0.15f;
         float offset;
 
@@ -475,14 +516,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateCombo()
     {
-        ++currentCombo;
+        currentCombo += 1;
+        totalCombo += 1;
 
-        // 100 콤보 단위로 피버모드 진입
+        // 콤보가 100의 배수일 때마다 피버모드에 진입한다.
         if (currentCombo > 0 && (currentCombo % 100) == 0)
         {
             if (HasSkill(SkillType.PLUS_FEVER_TIME))
             {
-                StartCoroutine(UpdateFeverMode(13.0f));
+                // 피버모드 지속시간 증가 스킬을 가지고 있다면, 13초동안 피버모드에 진입하도록 한다.
                 UseSkill((int)SkillType.PLUS_FEVER_TIME);
             }
             else
@@ -491,12 +533,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // 콤보는 마지막 클릭이후 0.65초동안 유지
+        // 콤보는 마지막 클릭이후 0.65초동안 유지된다.
         yield return new WaitForSeconds(0.65f);
 
-        ++lastCombo;
+        lastCombo += 1;
 
-        // 0.65초 이후에 이전과 콤보수가 같다면 최대 콤보를 갱신할지 검사한 후 콤보카운트를 0으로 설정
+        // 0.65초 이후에 이전과 콤보수가 같다면 최대 콤보를 갱신할지 검사한 후 콤보카운트를 0으로 설정한다.
         if (currentCombo == lastCombo)
         {
             if (currentCombo > maxCombo)
@@ -510,39 +552,39 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateFeverMode(float duration)
     {
-        // 피버모드에 진입했다고 저장
         isFeverMode = true;
 
+        // 피버모드 텍스트 이펙트 출력
         GameObject feverEffect = Instantiate(feverPrefab, canvasRectTransform);
         Text feverText = feverEffect.transform.GetChild(0).GetComponent<Text>();
         feverText.text = duration + feverText.text;
 
-        // 피버모드에 진입시, 8초동안 획득 반죽량과 획득 골드량 2배 증가
+        // 피버모드에 진입시, 획득 반죽량과 획득 골드량이 2배 증가한다.
         doughIncrement *= 2;
         SellButton.Income *= 2;
 
-        // 뒷 배경색을 붉은색으로 설정
+        // 뒷 배경색을 붉은색으로 설정한다.
         backgroundImage.color = Color.red;
 
-        // 피버모드 진입 BGM 사운드 출력
+        // 피버모드 진입 BGM 사운드를 출력한다.
         SoundManager.instance.PlayBGM("FEVER_TIME");
 
         yield return new WaitForSeconds(duration);
 
-        // 지속시간 이후에는 다시 획득 반죽량과 획득 골드량을 원래대로 변경
+        // 지속시간 이후에는 다시 획득 반죽량과 획득 골드량을 원래대로 설정한다.
         doughIncrement /= 2;
         SellButton.Income /= 2;
 
-        // 위의 값을 원래대로 변경 후에 false로 만들어 줘야 잠깐 사이에도 업그레이드 방지
+        // 위의 값을 원래대로 변경 후에 false로 만들어주어야 업그레이드 값이 제대로 적용된다.
         isFeverMode = false;
 
-        // 뒷 배경색을 원래대로 설정
+        // 뒷 배경색을 원래대로 설정한다.
         backgroundImage.color = Color.white;
 
-        // 스킬 사용시간이 모두 지났으므로, 사용중 상태를 제거한다.
+        // 스킬 지속시간이 모두 지났으므로, 사용중 상태를 제거한다.
         skillStatus = skillStatus & ~Constants.USING_SKILL2;
 
-        // 기존 BGM 사운드 출력
+        // 기존 BGM 사운드 출력한다.
         SoundManager.instance.PlayBGM("BGM");
     }
 
@@ -559,7 +601,7 @@ public class GameManager : MonoBehaviour
             yield return delayTime;
         }
 
-        // 스킬 사용시간이 모두 지났으므로, 사용중 상태를 제거한다.
+        // 스킬 지속시간이 모두 지났으므로, 사용중 상태를 제거한다.
         skillStatus = skillStatus & ~Constants.USING_SKILL1;
     }
 
@@ -610,13 +652,13 @@ public class GameManager : MonoBehaviour
     {
         // GameManager Data
         if (PlayerPrefs.HasKey("GOLD")) Gold = (uint)PlayerPrefs.GetInt("GOLD");
-        else Gold = 9999999;
+        else Gold = 99999999;
 
         if (PlayerPrefs.HasKey("TOTAL_GOLD")) TotalGold = (uint)PlayerPrefs.GetInt("TOTAL_GOLD");
         else TotalGold = Gold;
 
         if (PlayerPrefs.HasKey("DOUGH")) Dough = (uint)PlayerPrefs.GetInt("DOUGH");
-        else Dough = 9999999;
+        else Dough = 99999999;
 
         if (PlayerPrefs.HasKey("TOTAL_DOUGH")) TotalDough = (uint)PlayerPrefs.GetInt("TOTAL_DOUGH");
         else TotalDough = Dough;
@@ -678,6 +720,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        //ResetData();
+        ResetData();
     }
 }
