@@ -102,12 +102,12 @@ public class SellButton : MonoBehaviour
     {
         if (GameManager.instance.Dough >= Sales)
         {
-            StartCoroutine(GameManager.instance.Count(GoodsType.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
+            //StartCoroutine(GameManager.instance.Count(GoodsType.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
 
             if (GameManager.instance.HasPet(PetType.GREEN_CAT))
             {
                 // 게으른 냥이 펫을 소유하고 있다면, 10%의 추가적인 골드를 획득한다.
-                StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold + 1.1f * Income, GameManager.instance.Gold));
+                StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold + (uint)(1.1f * Income), GameManager.instance.Gold));
                 GenerateEffectWithPet();
             }
             else

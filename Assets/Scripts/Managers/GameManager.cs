@@ -298,7 +298,7 @@ public class GameManager : MonoBehaviour
                     if (HasPet(PetType.RED_CAT))
                     {
                         // 성난 냥이 펫을 보유한다면, 반죽량을 10% 추가적으로 상승시킨다.
-                        StartCoroutine(Count(GoodsType.DOUGH, dough + 1.1f * doughIncrement, dough));
+                        StartCoroutine(Count(GoodsType.DOUGH, dough + (uint)(1.1f * doughIncrement), dough));
                         GenerateEffectWithPet(position);
                     }
                     else
@@ -439,9 +439,12 @@ public class GameManager : MonoBehaviour
         func(param);
     }
 
-    public IEnumerator Count(GoodsType goods, float target, float current)
+    public IEnumerator Count(GoodsType goods, uint target, uint current)
     {
         // 참고 : https://unitys.tistory.com/7
+
+        float targetF = (float)target;
+        float currentF = (float)current;
 
         const float duration = 0.15f;
         float offset;
@@ -449,14 +452,14 @@ public class GameManager : MonoBehaviour
         switch (goods)
         {
             case GoodsType.DOUGH:
-                offset = (target - current) / duration;
+                offset = (targetF - currentF) / duration;
 
-                if (offset >= 0.0f)
+                if (offset > 0.0f)
                 {
-                    while (current < target)
+                    while (currentF < targetF)
                     {
-                        current += offset * Time.deltaTime;
-                        doughText.text = string.Format("{0:#,0}", current);
+                        currentF += offset * Time.deltaTime;
+                        doughText.text = string.Format("{0:#,0}", currentF);
 
                         yield return null;
                     }
@@ -464,28 +467,28 @@ public class GameManager : MonoBehaviour
                     // 목표 값이 현재 값보다 큰 경우에만, 총 반죽량을 증가시킨다.
                     totalDough += doughIncrement;
                 }
-                else
+                else if (offset < 0.0f)
                 {
-                    while (current > target)
+                    while (currentF > targetF)
                     {
-                        current += offset * Time.deltaTime;
-                        doughText.text = string.Format("{0:#,0}", current);
+                        currentF += offset * Time.deltaTime;
+                        doughText.text = string.Format("{0:#,0}", currentF);
 
                         yield return null;
                     }
                 }
 
-                Dough = (uint)target;
+                Dough = target;
                 break;
             case GoodsType.GOLD:
-                offset = (target - current) / duration;
+                offset = (targetF - currentF) / duration;
 
-                if (offset >= 0.0f)
+                if (offset > 0.0f)
                 {
-                    while (current < target)
+                    while (currentF < targetF)
                     {
-                        current += offset * Time.deltaTime;
-                        goldText.text = string.Format("{0:#,0}", current);
+                        currentF += offset * Time.deltaTime;
+                        goldText.text = string.Format("{0:#,0}", currentF);
 
                         yield return null;
                     }
@@ -493,18 +496,18 @@ public class GameManager : MonoBehaviour
                     // 목표 값이 현재 값보다 큰 경우에만, 총 골드를 증가시킨다.
                     totalGold += SellButton.Income;
                 }
-                else
+                else if (offset < 0.0f)
                 {
-                    while (current > target)
+                    while (currentF > targetF)
                     {
-                        current += offset * Time.deltaTime;
-                        goldText.text = string.Format("{0:#,0}", current);
+                        currentF += offset * Time.deltaTime;
+                        goldText.text = string.Format("{0:#,0}", currentF);
 
                         yield return null;
                     }
                 }
 
-                Gold = (uint)target;
+                Gold = target;
                 break;
         }
     }
@@ -654,13 +657,13 @@ public class GameManager : MonoBehaviour
     {
         // GameManager Data
         if (PlayerPrefs.HasKey("GOLD")) Gold = (uint)PlayerPrefs.GetInt("GOLD");
-        else Gold = 99999999;
+        else Gold = 100000000;
 
         if (PlayerPrefs.HasKey("TOTAL_GOLD")) TotalGold = (uint)PlayerPrefs.GetInt("TOTAL_GOLD");
         else TotalGold = Gold;
 
         if (PlayerPrefs.HasKey("DOUGH")) Dough = (uint)PlayerPrefs.GetInt("DOUGH");
-        else Dough = 99999999;
+        else Dough = 100000000;
 
         if (PlayerPrefs.HasKey("TOTAL_DOUGH")) TotalDough = (uint)PlayerPrefs.GetInt("TOTAL_DOUGH");
         else TotalDough = Dough;
@@ -726,6 +729,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        //ResetData();
+        ResetData();
     }
 }
