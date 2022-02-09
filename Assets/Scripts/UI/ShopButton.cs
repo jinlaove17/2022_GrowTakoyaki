@@ -10,7 +10,7 @@ public class ShopButton : MonoBehaviour
 
     // 카테고리/컨텐츠 관련 데이터(0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet)
     private Image[]      categoryButtonImages = null;
-    private GameObject[] shopContents = null;
+    private Transform[]  shopContents = null;
 
     // 펫 관련 데이터
     private Transform    pets = null;
@@ -82,29 +82,29 @@ public class ShopButton : MonoBehaviour
 
     private void Awake()
     {
-        GameObject shop = GameObject.Find("Shop");
+        Transform shop = GameObject.Find("Shop").transform;
         SystemManager.CheckNull(shop);
 
-        GameObject category = shop.transform.GetChild(1).gameObject;
+        Transform category = shop.GetChild(1);
         SystemManager.CheckNull(category);
 
-        int childCount = category.transform.childCount;
+        int childCount = category.childCount;
         categoryButtonImages = new Image[childCount];
 
         for (int i = 0; i < childCount; ++i)
         {
-            categoryButtonImages[i] = category.transform.GetChild(i).GetComponent<Image>();
+            categoryButtonImages[i] = category.GetChild(i).GetComponent<Image>();
             SystemManager.CheckNull(categoryButtonImages[i]);
         }
 
-        GameObject contents = shop.transform.GetChild(2).gameObject;
+        Transform contents = shop.GetChild(2);
         SystemManager.CheckNull(contents);
 
-        shopContents = new GameObject[childCount];
+        shopContents = new Transform[childCount];
 
         for (int i = 0; i < childCount; ++i)
         {
-            shopContents[i] = contents.transform.GetChild(i).gameObject;
+            shopContents[i] = contents.GetChild(i);
             SystemManager.CheckNull(shopContents[i]);
         }
 
@@ -117,7 +117,7 @@ public class ShopButton : MonoBehaviour
 
         for (int i = 0; i < childCount; ++i)
         {
-            buyButtonTexts[i] = shopContents[i].transform.GetChild(shopContents[i].transform.childCount - 1).GetComponentInChildren<Text>();
+            buyButtonTexts[i] = shopContents[i].GetChild(shopContents[i].childCount - 1).GetComponentInChildren<Text>();
             SystemManager.CheckNull(buyButtonTexts[i]);
         }
 
@@ -140,25 +140,26 @@ public class ShopButton : MonoBehaviour
 
     private void LoadData()
     {
-        Transform whiskContent = shopContents[0].transform;
+        // 휘젓개의 데이터를 불러온다.
+        Transform content = shopContents[0];
 
         if (whiskLevel > 1)
         {
             // 휘젓개 레벨이 1보다 크다면, 디폴트로 활성화된 0번 자식을 비활성화 시킨다.
-            whiskContent.GetChild(0).gameObject.SetActive(false);
+           content.GetChild(0).gameObject.SetActive(false);
 
             if (whiskLevel == maxWhiskLevel)
             {
                 // 매진 이미지를 출력시킨다.
-                whiskContent.GetChild((int)(maxWhiskLevel - 1)).gameObject.SetActive(true);
+                content.GetChild((int)(maxWhiskLevel - 1)).gameObject.SetActive(true);
 
                 // 만약 불러온 데이터가 최고 레벨일 경우, 마지막 자식인 버튼도 비활성화 시킨다.
-                whiskContent.GetChild((int)maxWhiskLevel).gameObject.SetActive(false);
+                content.GetChild((int)maxWhiskLevel).gameObject.SetActive(false);
             }
             else
             {
                 // 최고 레벨이 아닌 경우, 해당 레벨에 해당하는 휘젓개 정보를 활성화 시킨다.
-                whiskContent.GetChild((int)(whiskLevel - 1)).gameObject.SetActive(true);
+                content.GetChild((int)(whiskLevel - 1)).gameObject.SetActive(true);
 
                 // 버튼에 표시되는 아이템의 가격 또한 현재 레벨에 맞게 설정한다.
                 buyButtonTexts[0].text = string.Format("{0:#,0}", whiskPrice[whiskLevel - 1]) + "G";
@@ -167,29 +168,30 @@ public class ShopButton : MonoBehaviour
             // 해당 레벨전까지 도감을 해제시킨다.
             for (int i = 1; i < whiskLevel; ++i)
             {
-                dictionaryInfo.UnlockWhiskDict((uint)i, whiskContent.GetChild(i - 1).GetComponentsInChildren<Text>());
+                dictionaryInfo.UnlockWhiskDict((uint)i, content.GetChild(i - 1).GetComponentsInChildren<Text>());
             }
         }
 
-        Transform recipeContent = shopContents[1].transform;
+        // 레시피의 데이터를 불러온다.
+        content = shopContents[1];
 
         if (recipeLevel > 1)
         {
             // 휘젓개 레벨이 1보다 크다면, 디폴트로 활성화된 0번 자식을 비활성화 시킨다.
-            recipeContent.GetChild(0).gameObject.SetActive(false);
+            content.GetChild(0).gameObject.SetActive(false);
 
             if (recipeLevel == maxRecipeLevel)
             {
                 // 매진 이미지를 출력시킨다.
-                recipeContent.GetChild((int)(maxRecipeLevel - 1)).gameObject.SetActive(true);
+                content.GetChild((int)(maxRecipeLevel - 1)).gameObject.SetActive(true);
 
                 // 만약 불러온 데이터가 최고 레벨일 경우, 마지막 자식인 버튼도 비활성화 시킨다.
-                recipeContent.GetChild((int)maxRecipeLevel).gameObject.SetActive(false);
+                content.GetChild((int)maxRecipeLevel).gameObject.SetActive(false);
             }
             else
             {
                 // 최고 레벨이 아닌 경우, 해당 레벨에 해당하는 레시피 정보를 활성화 시킨다.
-                recipeContent.GetChild((int)(recipeLevel - 1)).gameObject.SetActive(true);
+                content.GetChild((int)(recipeLevel - 1)).gameObject.SetActive(true);
 
                 // 버튼에 표시되는 아이템의 가격 또한 현재 레벨에 맞게 설정한다.
                 buyButtonTexts[1].text = string.Format("{0:#,0}", recipePrice[recipeLevel - 1]) + "L";
@@ -198,14 +200,45 @@ public class ShopButton : MonoBehaviour
             // 해당 레벨전까지 도감을 해제시킨다.
             for (int i = 1; i < recipeLevel; ++i)
             {
-                dictionaryInfo.UnlockRecipeDict((uint)i, recipeContent.GetChild(i - 1).GetComponentsInChildren<Text>());
+                dictionaryInfo.UnlockRecipeDict((uint)i, content.GetChild(i - 1).GetComponentsInChildren<Text>());
             }
+        }
+
+        // 펫의 데이터를 불러온다.
+        content = shopContents[5].GetChild(0);
+        bool isSoldOut = true;
+        int enumCount = (int)PetType.ENUM_COUNT;
+
+        // 모든 펫을 가지고 있는지 검사하여 상점에 펫이 매진되었는지 판단한다.
+        for (int i = 0; i < enumCount; ++i)
+        {
+            if (GameManager.instance.HasPet((PetType)i))
+            {
+                // 구매한 펫이 화면에 렌더링 되도록 활성화 시킨다.
+                pets.GetChild(i).gameObject.SetActive(true);
+
+                // 상점창에서 해당 펫에 대한 내용을 비활성화 시킨다.
+                content.GetChild(i).gameObject.SetActive(false);
+
+                // 도감을 해제한다.
+                dictionaryInfo.UnlockPetDict((PetType)i, content.GetChild(i).GetComponentsInChildren<Text>());
+            }
+            else
+            {
+                isSoldOut = false;
+            }
+        }
+        
+        if (isSoldOut)
+        {
+            // 모든 펫이 팔렸다면 매진 이미지를 출력한다.
+            content.GetChild(enumCount).gameObject.SetActive(true);
         }
     }
 
     private void UpgradeWhisk()
     {
-        Transform whiskContent = shopContents[0].transform;
+        Transform whiskContent = shopContents[0];
 
         if (whiskLevel < maxWhiskLevel)
         {
@@ -242,7 +275,7 @@ public class ShopButton : MonoBehaviour
 
     private void UpgradeRecipe()
     {
-        Transform recipeContent = shopContents[1].transform;
+        Transform recipeContent = shopContents[1];
 
         if (recipeLevel < maxRecipeLevel)
         {
@@ -306,19 +339,19 @@ public class ShopButton : MonoBehaviour
             return;
         }
 
-        if (!shopContents[index].activeSelf)
+        if (!shopContents[index].gameObject.activeSelf)
         {
             for (int i = 0; i < categoryButtonImages.Length; ++i)
             {
                 if (i == index)
                 {
                     categoryButtonImages[i].color = activeColor;
-                    shopContents[i].SetActive(true);
+                    shopContents[i].gameObject.SetActive(true);
                 }
                 else
                 {
                     categoryButtonImages[i].color = inactiveColor;
-                    shopContents[i].SetActive(false);
+                    shopContents[i].gameObject.SetActive(false);
                 }
             }
 
@@ -441,8 +474,11 @@ public class ShopButton : MonoBehaviour
         {
             StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold - price, GameManager.instance.Gold));
 
-            Transform content = shopContents[5].transform.GetChild(0);
+            Transform content = shopContents[5].GetChild(0);
             Transform pet = null;
+
+            // 해당 펫의 도감을 해제한다.
+            dictionaryInfo.UnlockPetDict(petType, content.GetChild((int)petType).GetComponentsInChildren<Text>());
 
             switch (petType)
             {
@@ -488,6 +524,10 @@ public class ShopButton : MonoBehaviour
 
             // 구매 사운드를 출력한다.
             SoundManager.instance.PlaySFX("Buy");
+        }
+        else
+        {
+            GameManager.instance.PrintMessage("골드가 모자라요ㅠㅠ");
         }
     }
 }

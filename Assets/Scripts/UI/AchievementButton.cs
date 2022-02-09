@@ -39,11 +39,11 @@ public class AchievementButton : MonoBehaviour
 
     private void Awake()
     {
-        GameObject achievement = GameObject.Find("Achievement");
+        Transform achievement = GameObject.Find("Achievement").transform;
         SystemManager.CheckNull(achievement);
 
-        GameObject contents = achievement.transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).gameObject;
-        int childCount = contents.transform.childCount;
+        Transform contents = achievement.GetChild(1).GetChild(0).GetChild(0);
+        int childCount = contents.childCount;
 
         titleTexts = new Text[childCount];
         conditionTexts = new Text[childCount];
@@ -51,15 +51,15 @@ public class AchievementButton : MonoBehaviour
 
         for (int i = 0; i < childCount; ++i)
         {
-            GameObject content = contents.transform.GetChild(i).gameObject;
+            Transform content = contents.GetChild(i);
 
-            titleTexts[i] = content.transform.GetChild(0).gameObject.GetComponent<Text>();
+            titleTexts[i] = content.GetChild(0).GetComponent<Text>();
             SystemManager.CheckNull(titleTexts[i]);
 
-            conditionTexts[i] = content.transform.GetChild(1).gameObject.GetComponent<Text>();
+            conditionTexts[i] = content.GetChild(1).GetComponent<Text>();
             SystemManager.CheckNull(conditionTexts[i]);
 
-            getButtons[i] = content.transform.GetChild(2).gameObject.GetComponent<Button>();
+            getButtons[i] = content.GetChild(2).GetComponent<Button>();
             SystemManager.CheckNull(getButtons[i]);
         }
 

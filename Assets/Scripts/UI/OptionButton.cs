@@ -9,11 +9,11 @@ public class OptionButton : MonoBehaviour
     private static bool isOpened = false;
     
     // 옵션창 객체 데이터
-    private GameObject  option = null;
+    private Transform   option = null;
 
     // 사운드 관련 데이터
-    private Slider bgmSlider = null;
-    private Slider sfxSlider = null;
+    private Slider      bgmSlider = null;
+    private Slider      sfxSlider = null;
     public AudioClip[]  audioClips = null;
 
     public static bool IsOpened
@@ -31,13 +31,13 @@ public class OptionButton : MonoBehaviour
 
     private void Awake()
     {
-        option = GameObject.Find("UI").transform.Find("Option").gameObject;
+        option = GameObject.Find("UI").transform.Find("Option");
         SystemManager.CheckNull(option);
 
-        bgmSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).gameObject.GetComponent<Slider>();
+        bgmSlider = option.GetChild(0).GetChild(0).GetChild(2).GetComponent<Slider>();
         SystemManager.CheckNull(bgmSlider);
 
-        sfxSlider = option.transform.GetChild(0).transform.GetChild(0).transform.GetChild(4).gameObject.GetComponent<Slider>();
+        sfxSlider = option.GetChild(0).GetChild(0).GetChild(4).GetComponent<Slider>();
         SystemManager.CheckNull(sfxSlider);
 
         SystemManager.CheckNull(audioClips);
@@ -60,7 +60,7 @@ public class OptionButton : MonoBehaviour
         if (!isOpened)
         {
             isOpened = true;
-            option.SetActive(true);
+            option.gameObject.SetActive(true);
 
             SoundManager.instance.PlaySFX("PAUSE_IN", 0.8f);
         }
@@ -71,7 +71,7 @@ public class OptionButton : MonoBehaviour
         if (isOpened)
         {
             isOpened = false;
-            option.SetActive(false);
+            option.gameObject.SetActive(false);
 
             SoundManager.instance.PlaySFX("PAUSE_OUT", 1.0f);
         }

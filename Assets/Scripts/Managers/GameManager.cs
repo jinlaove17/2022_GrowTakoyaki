@@ -631,6 +631,10 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("SKILL_STATUS", (int)skillStatus);
 
+        PlayerPrefs.SetInt("HAS_RED_CAT", System.Convert.ToInt16(hasPet[0]));
+        PlayerPrefs.SetInt("HAS_YELLOW_CAT", System.Convert.ToInt16(hasPet[0]));
+        PlayerPrefs.SetInt("HAS_GREEN_CAT", System.Convert.ToInt16(hasPet[0]));
+
         // SellButton Data
         PlayerPrefs.SetInt("INCOME", (int)SellButton.Income);
         PlayerPrefs.SetInt("SALES", (int)SellButton.Sales);
@@ -682,6 +686,10 @@ public class GameManager : MonoBehaviour
         }
         else skillStatus = 0x00000000;
 
+        if (PlayerPrefs.HasKey("HAS_RED_CAT")) hasPet[0] = System.Convert.ToBoolean(PlayerPrefs.GetInt("HAS_RED_CAT"));
+        if (PlayerPrefs.HasKey("HAS_YELLOW_CAT")) hasPet[1] = System.Convert.ToBoolean(PlayerPrefs.GetInt("HAS_YELLOW_CAT"));
+        if (PlayerPrefs.HasKey("HAS_GREEN_CAT")) hasPet[2] = System.Convert.ToBoolean(PlayerPrefs.GetInt("HAS_GREEN_CAT"));
+
         // SellButton Data
         if (PlayerPrefs.HasKey("SALES")) SellButton.Sales = (uint)PlayerPrefs.GetInt("SALES");
         else SellButton.Sales = 100;
@@ -718,6 +726,6 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveData();
-        ResetData();
+        //ResetData();
     }
 }
