@@ -3,53 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PetType
-{
-    RED_CAT,
-    YELLOW_CAT,
-    GREEN_CAT,
-    ENUM_COUNT
-}
-
 public class ShopButton : MonoBehaviour
 {
-    // * 상점창이 열렸는지에 대한 여부
-    private static bool isOpened = false;
+    // 상점창이 열렸는지에 대한 여부
+    private static bool  isOpened = false;
 
-    // * 카테고리/컨텐츠 관련 데이터
-    // 0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet
-    private Image[] categoryButtonImages = null;
+    // 카테고리/컨텐츠 관련 데이터(0: Whisk, 1: Recipe, 2: Skill, 3: Building, 4: Cat, 5: Pet)
+    private Image[]      categoryButtonImages = null;
     private GameObject[] shopContents = null;
 
-    // * 펫 관련 데이터
-    private Transform pets = null;
+    // 펫 관련 데이터
+    private Transform    pets = null;
 
-    // * 구매 버튼 관련 데이터
-    // 0: Whisk, 1: Recipe
-    private Text[] buyButtonTexts = null;
+    // 구매 버튼 관련 데이터(0: Whisk, 1: Recipe_
+    private Text[]       buyButtonTexts = null;
 
-    // * 상점의 애니메이션 관련 데이터
-    private Animator shopAnimator = null;
+    // 상점의 애니메이션 관련 데이터
+    private Animator     shopAnimator = null;
 
-    // * 카테고리 버튼의 활성/비활성 색상
-    private Color activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
-    private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
+    // 카테고리 버튼의 활성/비활성 색상
+    private Color        activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
+    private Color        inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
 
-    // * 휘젓개 아이템 관련 데이터
-    private static uint whiskLevel = 1;
-    private const uint maxWhiskLevel = 5;
-    private uint[] whiskPrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
+    // 휘젓개 아이템 관련 데이터
+    private static uint  whiskLevel = 1;
+    private const uint   maxWhiskLevel = 5;
+    private uint[]       whiskPrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
-    // * 레시피 아이템 관련 데이터
-    private static uint recipeLevel = 1;
-    private const uint maxRecipeLevel = 5;
-    private uint[] recipePrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
+    // 레시피 아이템 관련 데이터
+    private static uint  recipeLevel = 1;
+    private const uint   maxRecipeLevel = 5;
+    private uint[]       recipePrice = new uint[] { 0, 50000, 200000, 1000000, 5000000 };
 
-    // * 도감 관련 데이터
-    public DictButton dictionaryInfo = null;
+    // 도감 관련 데이터
+    public DictButton    dictionaryInfo = null;
 
-    // * 사운드 관련 데이터
-    public AudioClip[] audioClips = null;
+    // 사운드 관련 데이터
+    public AudioClip[]   audioClips = null;
 
     public static bool IsOpened
     {
@@ -118,14 +108,13 @@ public class ShopButton : MonoBehaviour
             SystemManager.CheckNull(shopContents[i]);
         }
 
-        pets = GameObject.Find("Canvas").transform.GetChild(0).GetChild(5);
+        pets = GameObject.Find("Canvas").transform.GetChild(0).GetChild(7);
         SystemManager.CheckNull(pets);
 
-        // 휘젓개와 레시피 컨텐츠의 마지막 자식인 구매 버튼의 텍스트 객체를 저장한다.
-        // 0: Whisk, 1: Recipe
+        // 휘젓개와 레시피 컨텐츠의 마지막 자식인 구매 버튼의 텍스트 객체를 저장한다.(0: Whisk, 1: Recipe)
         buyButtonTexts = new Text[2];
-
         childCount = buyButtonTexts.Length;
+
         for (int i = 0; i < childCount; ++i)
         {
             buyButtonTexts[i] = shopContents[i].transform.GetChild(shopContents[i].transform.childCount - 1).GetComponentInChildren<Text>();
@@ -293,7 +282,7 @@ public class ShopButton : MonoBehaviour
 
     public void OnClickShopButton()
     {
-        if (GameManager.instance.IsClosed())
+        if (GameManager.instance.IsAllClosed())
         {
             isOpened = true;
             shopAnimator.SetTrigger("doShow");

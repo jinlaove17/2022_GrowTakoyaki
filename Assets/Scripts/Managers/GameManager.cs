@@ -4,75 +4,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// * 스킬의 종류
-public enum SkillType
-{
-    AUTO_SELL,
-    PLUS_FEVER_TIME
-}
-
-// * 재화의 종류
-public enum GoodsType
-{
-    GOLD,
-    DOUGH
-};
-
 public class GameManager : MonoBehaviour
 {
-    // * 싱글톤 패턴
+    // 싱글톤 패턴
     public static GameManager instance = null;
 
-    // 게임 데이터는 LoadData() 함수에서 PlayerPrefs를 이용하여 초기화를 수행한다.
-    // * 골드 관련 데이터
-    private uint gold = 0;
-    private uint totalGold = 0;
-    private Text goldText = null;
+    // * 세이브 게임 데이터는 LoadData() 함수에서 PlayerPrefs를 이용하여 초기화한다.
+    // 골드 관련 데이터
+    private uint              gold = 0;
+    private uint              totalGold = 0;
+    private Text              goldText = null;
 
-    // * 반죽량 관련 데이터
-    private uint dough = 0;
-    private uint totalDough = 0;
-    private Text doughText = null;
-    private uint doughIncrement = 0;
-    private uint doughIncrementPerSec = 1;
+    // 반죽 관련 데이터
+    private uint              dough = 0;
+    private uint              totalDough = 0;
+    private Text              doughText = null;
+    private uint              doughIncrement = 0;
+    private uint              doughIncrementPerSec = 1;
 
-    // * 콤보 관련 데이터
-    private uint currentCombo = 0;
-    private uint totalCombo = 0;
-    private uint lastCombo = 0;
-    private uint maxCombo = 0;
-    private uint totalMaxCombo = 0;
+    // 콤보 관련 데이터
+    private uint              currentCombo = 0;
+    private uint              totalCombo = 0;
+    private uint              lastCombo = 0;
+    private uint              maxCombo = 0;
+    private uint              totalMaxCombo = 0;
 
-    // * 피버모드 관련 데이터
-    private bool isFeverMode = false;
-    private Image backgroundImage = null;
+    // 피버모드 관련 데이터
+    private bool              isFeverMode = false;
+    private Image             backgroundImage = null;
 
-    // * 고양이 애니메이션 관련 데이터
-    private Animator catAnimator = null;
+    // 고양이 애니메이션 관련 데이터
+    private Animator          catAnimator = null;
 
-    // * 스킬 관련 데이터
-    private SellButton sellButton = null;
-    private Button[] skillButtons = null;
-    private int skillStatus = 0x00000000;
+    // 스킬 관련 데이터
+    private SellButton        sellButton = null;
+    private Button[]          skillButtons = null;
+    private int               skillStatus = 0x00000000;
 
-    // * 안내 메시지 관련 데이터
-    private Text messageText = null;
-    private Animator messageAnimator = null;
+    // 안내 메시지 관련 데이터
+    private Text              messageText = null;
+    private Animator          messageAnimator = null;
 
-    // * 펫 관련 데이터
-    private bool[] hasPet = new bool[] { false, false, false };
+    // 펫 관련 데이터
+    private bool[]            hasPet = new bool[] { false, false, false };
 
-    // * 캔버스 관련 데이터
-    public RectTransform canvasRectTransform = null;
+    // 캔버스 관련 데이터
+    public RectTransform      canvasRectTransform = null;
 
-    // * 프리팝 데이터
-    public GameObject starPrefab = null;
-    public GameObject scorePrefab = null;
-    public GameObject comboPrefab = null;
-    public GameObject feverPrefab = null;
+    // 프리팝 데이터
+    public GameObject         starPrefab = null;
+    public GameObject         scorePrefab = null;
+    public GameObject         comboPrefab = null;
+    public GameObject         feverPrefab = null;
 
-    // * 사운드 관련 데이터
-    public AudioClip[] audioClips = null;
+    // 사운드 관련 데이터
+    public AudioClip[]        audioClips = null;
 
     public uint Gold
     {
@@ -292,10 +278,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // 한 프레임에 doughIncrementPerSec 만큼씩 반죽을 증가시킨다.
         Dough += doughIncrementPerSec;
         totalDough += doughIncrementPerSec;
 
-        if (IsClosed())
+        if (IsAllClosed())
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -305,6 +292,7 @@ public class GameManager : MonoBehaviour
                 // 클릭한 위치가 ClickArea와 충돌한 경우에만, 이벤트를 발생시킨다.
                 if (hit.collider != null)
                 {
+                    // 배경 앞쪽에서 렌더링되어야 하므로, 일정 값을 빼준다.
                     position.z = -50.0f;
 
                     if (HasPet(PetType.RED_CAT))
@@ -387,42 +375,45 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
+            // 스킬을 사용했기 때문에, 좌측 상단의 스킬 아이콘을 비활성화 시킨다.
             skillButtons[skillIndex].gameObject.SetActive(false);
         }
     }
 
-    public bool IsClosed()
+    public bool IsAllClosed()
     {
+        // 옵션창, 업적창, 상점창, 도감창이 모두 닫혀있는지 검사한다.
         return (!OptionButton.IsOpened) && (!AchievementButton.IsOpened) && (!ShopButton.IsOpened) && (!DictButton.IsOpened);
     }
 
     public void PrintMessage(string textContent)
     {
+        // textContent의 내용으로 안내메세지를 화면에 출력한다.
         messageAnimator.Play("Show", -1, 0.0f);
         messageText.text = textContent;
     }
 
     private void GenerateEffect(Vector3 position)
     {
-        // 별 파티클 이펙트
+        // 별 파티클 이펙트를 출력한다.
         Instantiate(starPrefab, position, Quaternion.identity, canvasRectTransform);
 
-        // 획득 점수 텍스트 이펙트
+        // 획득 점수 텍스트 이펙트를 출력한다.
         position.y -= 65.0f;
         GameObject scoreEffect = Instantiate(scorePrefab, position, Quaternion.identity, canvasRectTransform);
         scoreEffect.GetComponent<Text>().text = "+" + doughIncrement.ToString() + "L";
 
-        // 콤보 텍스트 이펙트
+        // 콤보 텍스트 이펙트를 출력한다.
         GameObject comboEffect = Instantiate(comboPrefab, canvasRectTransform);
         Text comboText = comboEffect.GetComponent<Text>();
         Text maxComboText = comboEffect.transform.GetChild(0).GetComponent<Text>();
         comboText.text = currentCombo.ToString() + " COMBO!";
         maxComboText.text = "MAX " + maxCombo.ToString();
 
-        // 고양이의 애니메이션 트리거 발생
+        // 고양이(요리사)의 애니메이션 트리거를 발생시킨다.
         catAnimator.SetTrigger("doTouch");
 
-        // 클릭 사운드 출력
+        // 클릭 사운드를 출력한다.
         SoundManager.instance.PlaySFX("Click", 0.5f);
     }
 
@@ -430,6 +421,7 @@ public class GameManager : MonoBehaviour
     {
         GenerateEffect(position);
 
+        // 성난 냥이 펫을 보유하고 있다면, 추가 적인 텍스트 이펙트를 출력한다.
         position.y -= 120.0f;
         GameObject scoreEffect = Instantiate(scorePrefab, position, Quaternion.identity, canvasRectTransform);
         Text scoreText = scoreEffect.GetComponent<Text>();
@@ -442,7 +434,8 @@ public class GameManager : MonoBehaviour
         // seconds초동안 기다린 후,
         yield return new WaitForSeconds(seconds);
 
-        // 매개변수로 넘어온 함수를 호출한다.
+        // 매개변수로 넘어온 함수에 param을 파라미터로 넘겨주어 호출한다.
+        // 이때, Action<>을 사용하기 때문에, 리턴 값을 void여야 한다.
         func(param);
     }
 
@@ -450,7 +443,7 @@ public class GameManager : MonoBehaviour
     {
         // 참고 : https://unitys.tistory.com/7
 
-        float duration = 0.15f;
+        const float duration = 0.15f;
         float offset;
 
         switch (goods)
@@ -468,6 +461,7 @@ public class GameManager : MonoBehaviour
                         yield return null;
                     }
 
+                    // 목표 값이 현재 값보다 큰 경우에만, 총 반죽량을 증가시킨다.
                     totalDough += doughIncrement;
                 }
                 else
@@ -496,6 +490,7 @@ public class GameManager : MonoBehaviour
                         yield return null;
                     }
 
+                    // 목표 값이 현재 값보다 큰 경우에만, 총 골드를 증가시킨다.
                     totalGold += SellButton.Income;
                 }
                 else
@@ -519,33 +514,36 @@ public class GameManager : MonoBehaviour
         currentCombo += 1;
         totalCombo += 1;
 
-        // 콤보가 100의 배수일 때마다 피버모드에 진입한다.
-        if (currentCombo > 0 && (currentCombo % 100) == 0)
+        // 콤보가 FEVER_COMBO의 배수일 경우, 피버모드에 진입한다.
+        if (currentCombo > 0 && (currentCombo % Constants.FEVER_COMBO) == 0)
         {
             if (HasSkill(SkillType.PLUS_FEVER_TIME))
             {
-                // 피버모드 지속시간 증가 스킬을 가지고 있다면, 13초동안 피버모드에 진입하도록 한다.
+                // 진입 시, 피버모드 지속시간 증가 스킬을 가지고 있다면 13초동안 피버모드에 진입한다.
                 UseSkill((int)SkillType.PLUS_FEVER_TIME);
             }
             else
             {
+                // 스킬을 가지고 있지 않다면 8초동안 피버모드에 진입한다.
                 StartCoroutine(UpdateFeverMode(8.0f));
             }
         }
 
-        // 콤보는 마지막 클릭이후 0.65초동안 유지된다.
-        yield return new WaitForSeconds(0.65f);
+        // 콤보는 마지막 클릭이후 COMBO_DURATION초동안 유지된다.
+        yield return new WaitForSeconds(Constants.COMBO_DURATION);
 
         lastCombo += 1;
 
-        // 0.65초 이후에 이전과 콤보수가 같다면 최대 콤보를 갱신할지 검사한 후 콤보카운트를 0으로 설정한다.
+        // COMBO_DURATION초 이후에도 현재 콤보수가 최근 콤보수와 같다면, 콤보카운트를 0으로 설정한다.
         if (currentCombo == lastCombo)
         {
+            // 만약 현재 콤보수가 최대 콤보수를 능가했다면, 최대 콤보수를 갱신한다.
             if (currentCombo > maxCombo)
             {
                 totalMaxCombo = maxCombo = currentCombo;
             }
 
+            // 갱신 이후에는 현재 콤보수와 최근 콤보수를 0으로 만든다.
             currentCombo = lastCombo = 0;
         }
     }
@@ -566,7 +564,7 @@ public class GameManager : MonoBehaviour
         // 뒷 배경색을 붉은색으로 설정한다.
         backgroundImage.color = Color.red;
 
-        // 피버모드 진입 BGM 사운드를 출력한다.
+        // 배경음을 피버모드 진입 BGM으로 변경한다.
         SoundManager.instance.PlayBGM("FEVER_TIME");
 
         yield return new WaitForSeconds(duration);

@@ -5,23 +5,22 @@ using UnityEngine.UI;
 
 public class DictButton : MonoBehaviour
 {
-    // * 도감창이 열려있는지에 대한 여부
-    private static bool isOpened = false;
+    // 도감창이 열려있는지에 대한 여부
+    private static bool  isOpened = false;
 
-    // * 카테고리/컨텐츠 관련 데이터
-    // 0: Whisk, 1: Recipe, 2: Building, 3: Cat, 4: Pet
-    private Image[] categoryButtonImages = null;
+    // 카테고리/컨텐츠 관련 데이터(0: Whisk, 1: Recipe, 2: Building, 3: Cat, 4: Pet_
+    private Image[]      categoryButtonImages = null;
     private GameObject[] dictContents = null;
 
-    // * 도감의 애니메이션 관련 데이터
-    private Animator dictAnimator = null;
+    // 도감의 애니메이션 관련 데이터
+    private Animator     dictAnimator = null;
 
-    // * 카테고리 버튼의 활성/비활성 색상
-    private Color activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
-    private Color inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
+    // 카테고리 버튼의 활성/비활성 색상
+    private Color        activeColor = new Color(240.0f / 255, 200.0f / 255, 150.0f / 255);
+    private Color        inactiveColor = new Color(220.0f / 255, 220.0f / 255, 220.0f / 255);
 
-    // * 사운드 관련 데이터
-    public AudioClip[] audioClips = null;
+    // 사운드 관련 데이터
+    public AudioClip[]   audioClips = null;
 
     public static bool IsOpened
     {
@@ -113,7 +112,7 @@ public class DictButton : MonoBehaviour
 
     public void OnClickDictButton()
     {
-        if (GameManager.instance.IsClosed())
+        if (GameManager.instance.IsAllClosed())
         {
             isOpened = true;
             dictAnimator.SetTrigger("doShow");

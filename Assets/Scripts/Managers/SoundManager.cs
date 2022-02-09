@@ -2,26 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 사운드의 종류
-public enum SoundType
-{
-    BGM,
-    SFX,
-    ENUM_COUNT
-}
-
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance = null;
+    // 싱글톤 패턴
+    public static SoundManager            instance = null;
 
-    // 오디오 클립 모음
+    // 문자열로 오디오 클립을 관리하는 딕셔너리
     private Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
-    // 오디오 플레이어(0: 배경음(BGM), 1: 효과음(SFX))
-    public List<AudioSource> audioSources = new List<AudioSource>();
+    // 오디오 플레이어(0: BGM, 1: SFX)
+    public List<AudioSource>              audioSources = new List<AudioSource>();
 
-    // 배경음 클립 모음
-    public AudioClip[] bgmClips = null;
+    // 여러 배경음의 오디오 클립
+    public AudioClip[]                    bgmClips = null;
 
     private void Awake()
     {

@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class OptionButton : MonoBehaviour
 {
-    // * 옵션창이 열렸는지에 대한 여부
+    // 옵션창이 열렸는지에 대한 여부
     private static bool isOpened = false;
     
-    // * 옵션창
-    private GameObject option = null;
+    // 옵션창 객체 데이터
+    private GameObject  option = null;
 
-    // * 사운드 관련 데이터
-    public AudioClip[] audioClips = null;
+    // 사운드 관련 데이터
     private Slider bgmSlider = null;
     private Slider sfxSlider = null;
+    public AudioClip[]  audioClips = null;
 
     public static bool IsOpened
     {
@@ -49,7 +49,7 @@ public class OptionButton : MonoBehaviour
     {
         if (isOpened)
         {
-            // 옵션창이 열려있을 때만, 배경음과 효과음의 크기를 슬라이더 바의 값에 따라 조정
+            // 옵션창이 열려있을 때만, 배경음과 효과음의 크기를 슬라이더 바의 값에 따라 조정한다.
             SoundManager.instance.audioSources[(int)SoundType.BGM].volume = bgmSlider.value;
             SoundManager.instance.audioSources[(int)SoundType.SFX].volume = sfxSlider.value;
         }

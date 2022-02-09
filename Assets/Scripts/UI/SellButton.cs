@@ -5,23 +5,23 @@ using UnityEngine.UI;
 
 public class SellButton : MonoBehaviour
 {
-    // * 판매시의 소모 반죽량 관련 데이터
+    // 판매시의 소모 반죽량 관련 데이터
     private static uint sales = 0;
     private static Text salesText = null;
 
-    // * 판매시의 획득 골드 관련 데이터
+    // 판매시의 획득 골드 관련 데이터
     private static uint income = 0;
 
-    // * 이펙트의 위치 데이터
-    private Vector3 particlePosition = Vector3.zero;
-    private Vector3 incomeTextPosition = Vector3.zero;
-    private Vector3 petIncomeTextPosition = Vector3.zero;
+    // 이펙트의 위치 데이터
+    private Vector3     particlePosition = Vector3.zero;
+    private Vector3     incomeTextPosition = Vector3.zero;
+    private Vector3     petIncomeTextPosition = Vector3.zero;
 
-    // * 프리팝 데이터
-    public GameObject particlePrefab = null;
-    public GameObject goldTextPrefab = null;
+    // 프리팝 데이터
+    public GameObject   particlePrefab = null;
+    public GameObject   goldTextPrefab = null;
 
-    // * 사운드 관련 데이터
+    // 사운드 관련 데이터
     public AudioClip[] audioClips = null;
 
     public static uint Sales
@@ -91,9 +91,10 @@ public class SellButton : MonoBehaviour
     {
         GenerateEffect();
 
+        // 게으른 냥이 펫을 소유하고 있다면, 추가적인 골드 텍스트 이펙트를 출력한다.
         GameObject goldEffect = Instantiate(goldTextPrefab, petIncomeTextPosition, Quaternion.identity, GameManager.instance.canvasRectTransform);
         Text goldText = goldEffect.GetComponent<Text>();
-        goldText.text = "+" + Income.ToString() + "G";
+        goldText.text = "+" + (0.1f * Income).ToString() + "G";
         goldText.fontSize -= 10;
     }
 
@@ -105,6 +106,7 @@ public class SellButton : MonoBehaviour
 
             if (GameManager.instance.HasPet(PetType.GREEN_CAT))
             {
+                // 게으른 냥이 펫을 소유하고 있다면, 10%의 추가적인 골드를 획득한다.
                 StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold + 1.1f * Income, GameManager.instance.Gold));
                 GenerateEffectWithPet();
             }
