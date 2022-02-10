@@ -15,6 +15,7 @@ public class AchievementButton : MonoBehaviour
     private static uint maxComboIndex = 0;
 
     // ¾÷ÀûÀÇ ³»¿ëµéÀ» ´ã±âÀ§ÇÑ ¹è¿­
+    private Transform[] achievementContents = null;
     private Text[]      titleTexts = null;
     private Text[]      conditionTexts = null;
     private Button[]    getButtons = null;
@@ -45,6 +46,7 @@ public class AchievementButton : MonoBehaviour
         Transform contents = achievement.GetChild(1).GetChild(0).GetChild(0);
         int childCount = contents.childCount;
 
+        achievementContents = new Transform[childCount];
         titleTexts = new Text[childCount];
         conditionTexts = new Text[childCount];
         getButtons = new Button[childCount];
@@ -52,6 +54,9 @@ public class AchievementButton : MonoBehaviour
         for (int i = 0; i < childCount; ++i)
         {
             Transform content = contents.GetChild(i);
+
+            achievementContents[i] = content;
+            SystemManager.CheckNull(achievementContents[i]);
 
             titleTexts[i] = content.GetChild(0).GetComponent<Text>();
             SystemManager.CheckNull(titleTexts[i]);
@@ -188,21 +193,33 @@ public class AchievementButton : MonoBehaviour
     private void UpdateAchievements()
     {
         // °ñµå ¾÷Àû
-        titleTexts[0].text = "[°ñµå] " + goldTitles[goldIndex];
-        conditionTexts[0].text = "´©Àû °ñµå È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalGold) + "G/" + string.Format("{0:#,0}", goldGoal[goldIndex]) + "G µ¹ÆÄ!";
+        if (goldIndex < goldGoal.Length)
+        {
+            titleTexts[0].text = "[°ñµå] " + goldTitles[goldIndex];
+            conditionTexts[0].text = "´©Àû °ñµå È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalGold) + "G/" + string.Format("{0:#,0}", goldGoal[goldIndex]) + "G µ¹ÆÄ!";
+        }
 
         // ¹ÝÁ×·® ¾÷Àû
-        titleTexts[1].text = "[¹ÝÁ×·®] " + doughTitles[doughIndex];
-        conditionTexts[1].text = "´©Àû ¹ÝÁ×·® È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalDough) + "L/" + string.Format("{0:#,0}", doughGoal[doughIndex]) + "L µ¹ÆÄ!";
+        if (doughIndex < doughGoal.Length)
+        {
+            titleTexts[1].text = "[¹ÝÁ×·®] " + doughTitles[doughIndex];
+            conditionTexts[1].text = "´©Àû ¹ÝÁ×·® È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalDough) + "L/" + string.Format("{0:#,0}", doughGoal[doughIndex]) + "L µ¹ÆÄ!";
+        }
 
         // ÄÞº¸ ¾÷Àû
-        titleTexts[2].text = "[ÄÞº¸] " + comboTitles[comboIndex];
-        conditionTexts[2].text = "´©Àû ÄÞº¸ È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalCombo) + "È¸/" + string.Format("{0:#,0}", comboGoal[comboIndex]) + "È¸ µ¹ÆÄ!";
+        if (comboIndex < comboGoal.Length)
+        {
+            titleTexts[2].text = "[ÄÞº¸] " + comboTitles[comboIndex];
+            conditionTexts[2].text = "´©Àû ÄÞº¸ È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalCombo) + "È¸/" + string.Format("{0:#,0}", comboGoal[comboIndex]) + "È¸ µ¹ÆÄ!";
+        }
 
         // ÃÖ´ë ÄÞº¸ ¾÷Àû
-        titleTexts[3].text = "[ÃÖ´ë ÄÞº¸] " + maxComboTitles[maxComboIndex];
-        conditionTexts[3].text = "´©Àû ÃÖ´ë ÄÞº¸ È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalMaxCombo) + "È¸/" + string.Format("{0:#,0}", maxComboGoal[maxComboIndex]) + "È¸ µ¹ÆÄ!";
-        
+        if (maxComboIndex < maxComboGoal.Length)
+        {
+            titleTexts[3].text = "[ÃÖ´ë ÄÞº¸] " + maxComboTitles[maxComboIndex];
+            conditionTexts[3].text = "´©Àû ÃÖ´ë ÄÞº¸ È¹µæ\n" + string.Format("{0:#,0}", GameManager.instance.TotalMaxCombo) + "È¸/" + string.Format("{0:#,0}", maxComboGoal[maxComboIndex]) + "È¸ µ¹ÆÄ!";
+        }
+
         ActivateReward();
     }
 
@@ -226,29 +243,34 @@ public class AchievementButton : MonoBehaviour
         }
     }
 
-    public void OnClickGetReward(int Index)
+    public void OnClickGetReward(int index)
     {
-        if ( Index < 0 || Index >= getButtons.Length)
+        if ( index < 0 || index >= getButtons.Length)
         {
             return;
         }
 
         const uint basicReward = 1000000;
         uint rewardGold = 0;
+        uint nextRewardGold = 0;
 
-        switch (Index)
+        switch (index)
         {
             case 0:
-                rewardGold = (uint)(basicReward * Mathf.Pow(2, ++goldIndex));
+                rewardGold = (uint)(basicReward * Mathf.Pow(2, goldIndex));
+                nextRewardGold = (uint)(basicReward * Mathf.Pow(2, ++goldIndex));
                 break;
             case 1:
-                rewardGold = (uint)(basicReward * Mathf.Pow(2, ++doughIndex));
+                rewardGold = (uint)(basicReward * Mathf.Pow(2, doughIndex));
+                nextRewardGold = (uint)(basicReward * Mathf.Pow(2, ++doughIndex));
                 break;
             case 2:
-                rewardGold = (uint)(basicReward * Mathf.Pow(2, ++comboIndex));
+                rewardGold = (uint)(basicReward * Mathf.Pow(2, comboIndex));
+                nextRewardGold = (uint)(basicReward * Mathf.Pow(2, ++comboIndex));
                 break;
             case 3:
-                rewardGold = (uint)(basicReward * Mathf.Pow(2, ++maxComboIndex));
+                rewardGold = (uint)(basicReward * Mathf.Pow(2, maxComboIndex));
+                nextRewardGold = (uint)(basicReward * Mathf.Pow(2, ++maxComboIndex));
                 break;
             case 4:
                 break;
@@ -256,10 +278,19 @@ public class AchievementButton : MonoBehaviour
 
         StartCoroutine(GameManager.instance.Count(GoodsType.GOLD, GameManager.instance.Gold + rewardGold, GameManager.instance.Gold));
 
-        getButtons[Index].GetComponentInChildren<Text>().text = string.Format("{0:#,0}", rewardGold) + "G";
-        getButtons[Index].interactable = false;
+        if (goldIndex >= goldGoal.Length || doughIndex >= doughGoal.Length || comboIndex >= comboGoal.Length || maxComboIndex >= maxComboGoal.Length)
+        {
+            // ÃÖÁ¾ ´Ü°èÀÇ ¾÷ÀûÀ» Å¬¸®¾îÇÑ °æ¿ì¿¡´Â, ¾÷Àû ¸®½ºÆ®¿¡¼­ ºñÈ°¼ºÈ­ ½ÃÅ²´Ù.
+            achievementContents[index].gameObject.SetActive(false);
+        }
+        else
+        {
+            getButtons[index].GetComponentInChildren<Text>().text = string.Format("{0:#,0}", nextRewardGold) + "G";
+            getButtons[index].interactable = false;
 
-        UpdateAchievements();
+            UpdateAchievements();
+        }
+
         SoundManager.instance.PlaySFX("Clear");
     }
 }
