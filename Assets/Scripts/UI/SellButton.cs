@@ -65,13 +65,13 @@ public class SellButton : MonoBehaviour
         RectTransform rectTransform = GetComponent<RectTransform>();
         SystemManager.CheckNull(rectTransform);
 
-        float halfWidth = 0.5f * rectTransform.rect.width;
         float halfHeight = 0.5f * rectTransform.rect.height;
 
-        particlePosition = incomeTextPosition = new Vector3(rectTransform.position.x + halfWidth, rectTransform.position.y + halfHeight, -50.0f);
+        particlePosition = incomeTextPosition = petIncomeTextPosition = new Vector3(rectTransform.position.x, rectTransform.position.y + halfHeight, -50.0f);
+        
+        // 버튼 피벗의 조금 위에서 출력
         incomeTextPosition.y += 180.0f;
-        petIncomeTextPosition = incomeTextPosition;
-        petIncomeTextPosition.y += 50.0f;
+        petIncomeTextPosition.y += 230.0f;
     }
 
     private void GenerateEffect()
@@ -102,7 +102,7 @@ public class SellButton : MonoBehaviour
     {
         if (GameManager.instance.Dough >= Sales)
         {
-            //StartCoroutine(GameManager.instance.Count(GoodsType.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
+            StartCoroutine(GameManager.instance.Count(GoodsType.DOUGH, GameManager.instance.Dough - Sales, GameManager.instance.Dough));
 
             if (GameManager.instance.HasPet(PetType.GREEN_CAT))
             {
